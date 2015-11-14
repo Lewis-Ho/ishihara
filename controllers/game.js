@@ -87,13 +87,13 @@ angular.module('starterApp')
         if (vpw<vph){
           if (vpw>((boxesSize+1)*52)){
             console.log("vpw");
-            console.log(vpw+' ' +(boxesSize++)*52);
+            console.log(vpw+' ' +(boxesSize + 1)*52);
             boxesSize++;
           }
         } else {
           console.log("vph");
           if (vph>((boxesSize+1)*52)){
-            console.log(vph+' ' +(boxesSize++)*52);
+            console.log(vph+' ' +(boxesSize + 1)*52);
             boxesSize++;
           }
         }
