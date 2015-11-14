@@ -1,0 +1,31 @@
+{
+  "name": "ishihara",
+  "version": "1.0.0",
+  "description": "Color blindness testing game",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": "0.10.29"
+  },
+  "keywords": [
+    "color",
+    "blindness",
+    "game",
+    "test",
+    "testing",
+    "disability"
+  ],
+  "author": "Lewis-Ho",
+  "license": "MIT",
+  "dependencies": {
+    "angular": "^1.4.7",
+    "angular-animate": "^1.4.7",
+    "angular-aria": "^1.4.7",
+    "angular-material": "^0.11.4",
+    "angular-route": "^1.4.7",
+    "express": "^4.13.3",
+    "jade": "^1.11.0"
+  }
+}

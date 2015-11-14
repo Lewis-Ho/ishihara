@@ -1,0 +1,11 @@
+#start-btn {
+  padding: 10px;
+}
+.menu-btn {
+  position:absolute;
+  bottom:2%;
+  right:2%;
+}
+.menu-sub-btn {
+  color: #757575;
+}

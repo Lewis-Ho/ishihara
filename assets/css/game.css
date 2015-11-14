@@ -1,0 +1,33 @@
+body, html { 
+    overflow-x: hidden; 
+    overflow-y: auto;
+}
+
+.game-container {
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
+
+.md-button {
+  min-width: 36px;
+  min-height: 36px;
+}
+.menu-btn {
+  position:absolute;
+  bottom:0;
+  right:0;
+}
+.menu-sub-btn {
+  color: #757575;
+}
+.scoreboard{
+  position: relative;
+}
+#score {
+  position:absolute;
+  top:0;
+  right:0;
+}

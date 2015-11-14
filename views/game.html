@@ -1,0 +1,22 @@
+<head>
+  <link rel="stylesheet" href="assets/css/game.css"/>
+<!--  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
+</head>
+<div class="game-container">
+  <div ng-controller="GameCtrl" >
+<!--
+  <md-toolbar class="scoreboard" layout="row" class="md-whiteframe-z1">
+    <h1>Ishihara</h1>
+  </md-toolbar>
+-->
+    
+    <div layout="row" layout-align="space-around center" class="rows" ng-repeat="rows in boxes">
+      <span layout="column" layout-align="space-around center" class="row" ng-repeat="box in rows">
+        <md-button aria-label="Click Me!" ng-style="{'background': box.color ,'width':btnWidth, 'height':btnWidth }" ng-click="check(box.flag)"></md-button>
+      </span>
+    </div>
+    <div class="scoreboard">
+      <span id="score">{{score}}</span>
+    </div>
+  </div>
+</div>
