@@ -45,7 +45,7 @@ function resizeDiv(window, array) {
 }
 
 angular.module('starterApp')
-  .controller('GameCtrl', ['$scope', '$window', function($scope, $window) {
+  .controller('GameCtrl', ['$scope', '$window', 'scoreboard', function($scope, $window, scoreboard) {
     // Init Setting
     var boxesSize = 2;
     var ranColor = randomPick(colorSet);
@@ -53,7 +53,7 @@ angular.module('starterApp')
     var vph = $window.innerHeight;
     var btnSize = 0;
     $scope.boxes = [];
-    $scope.score = 0;
+    $scope.score = scoreboard.getScore();
   
     for(var i=0; i<4; i++){
       var newBox = new box(i, 0, ranColor[0]);
@@ -82,7 +82,8 @@ angular.module('starterApp')
     // Check current button's flag: if true, resize array; if false, size remain but change color set
     $scope.check = function(flag) {
       if (flag==1) {
-        $scope.score++;
+        scoreboard.updateScore();
+        $scope.score = scoreboard.getScore();
         if (vpw<vph){
           if (vpw>((boxesSize+1)*52)){
             console.log("vpw");
@@ -125,6 +126,35 @@ angular.module('starterApp')
       $scope.boxes = chunkArray($scope.boxes, Math.sqrt($scope.boxes.length));
     };
   }]);
+
+angular.module('starterApp').factory('scoreboard', function(){
+  var service = {};
+  var _score = 0;
+  var _history = 'high score';
+  var _round = 0;
+  
+  service.getScore = function(){
+    return _score;
+  }
+  service.updateScore = function(){
+    _score = _score + 1;
+    console.log(_score);
+  }
+  service.getRound = function(){
+    return _round;
+  }
+  service.updateRound = function(){
+    _round = _round + 1;
+  }
+  service.setHistory = function(history){
+    _hostory = history;
+  }
+  service.getHistory = function(){
+    return _hostory;
+  }
+  
+  return service;
+})
 
   
     // Functions
