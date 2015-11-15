@@ -8,6 +8,8 @@
  * Controller of the 
  */
 
+var app = angular.module('starterApp');
+
 var colorSet = [
   ['#fbe9e7', '#ffccbc'], 
   ['#3399ff', '#3333ff'],
@@ -44,8 +46,17 @@ function resizeDiv(window, array) {
   return (window-(Math.sqrt(array.length)*25))/Math.sqrt(array.length);
 }
 
-angular.module('starterApp')
-  .controller('GameCtrl', ['$scope', '$window', 'scoreboard', function($scope, $window, scoreboard) {
+app.controller('GameCtrl', ['$scope', '$window', 'scoreboard', function($scope, $window, scoreboard) {
+//  $scope.score = scoreboard.getScore();
+//  $scope.round = scoreboard.getRound();
+}]);
+
+app.controller('ScoreboardCtrl', ['$scope', '$window', 'scoreboard', function($scope, $window, scoreboard) {
+  $scope.score = scoreboard.getScore();
+  $scope.round = scoreboard.getRound();
+}]);
+
+app.controller('GameBoardCtrl', ['$scope', '$window', 'scoreboard', function($scope, $window, scoreboard) {
     // Init Setting
     var boxesSize = 2;
     var ranColor = randomPick(colorSet);
@@ -53,7 +64,6 @@ angular.module('starterApp')
     var vph = $window.innerHeight;
     var btnSize = 0;
     $scope.boxes = [];
-    $scope.score = scoreboard.getScore();
   
     for(var i=0; i<4; i++){
       var newBox = new box(i, 0, ranColor[0]);
@@ -71,16 +81,14 @@ angular.module('starterApp')
       btnSize = resizeDiv(vph, $scope.boxes);
     }
     $scope.btnWidth = btnSize+'px';
-    
     // Chunk button array
     $scope.boxes = chunkArray($scope.boxes, Math.sqrt($scope.boxes.length));
-    
-    
-    
   
     ///// NG-CLICK FUNCTION /////
     // Check current button's flag: if true, resize array; if false, size remain but change color set
     $scope.check = function(flag) {
+      scoreboard.updateRound();
+      $scope.round = scoreboard.getRound();
       if (flag==1) {
         scoreboard.updateScore();
         $scope.score = scoreboard.getScore();
@@ -127,7 +135,8 @@ angular.module('starterApp')
     };
   }]);
 
-angular.module('starterApp').factory('scoreboard', function(){
+// Factory //
+app.factory('scoreboard', function(){
   var service = {};
   var _score = 0;
   var _history = 'high score';

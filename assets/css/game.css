@@ -24,10 +24,16 @@ body, html {
   color: #757575;
 }
 .scoreboard{
-  position: relative;
+  left: 80%;
+  top: 20%;
+  position: absolute;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
 }
 #score {
+/*
   position:absolute;
   top:0;
   left:0;
+*/
 }

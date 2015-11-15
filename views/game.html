@@ -2,15 +2,18 @@
   <link rel="stylesheet" href="assets/css/game.css"/>
 <!--  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
 </head>
-<div class="game-container">
-  <div ng-controller="GameCtrl" >
-    <div layout="row" layout-align="space-around center" class="rows" ng-repeat="rows in boxes">
-      <span layout="column" layout-align="space-around center" class="row" ng-repeat="box in rows">
-        <md-button aria-label="Click Me!" ng-style="{'background': box.color ,'width':btnWidth, 'height':btnWidth }" ng-click="check(box.flag)"></md-button>
-      </span>
+<div>
+  <div ng-controller="GameCtrl" layout="row" layout-wrap>
+    <div ng-controller="GameBoardCtrl" class="game-container" flex="66">
+      <div layout="row" layout-align="space-around center" class="rows" ng-repeat="rows in boxes">
+        <span class="row" ng-repeat="box in rows">
+          <md-button aria-label="Click Me!" ng-style="{'background': box.color ,'width':btnWidth, 'height':btnWidth }" ng-click="check(box.flag)"></md-button>
+        </span>
+      </div>
     </div>
-    <div class="scoreboard">
-      <span id="score">{{score}}</span>
+    <div class="scoreboard" ng-controller="ScoreboardCtrl" flex="33">
+      <div>ROUND <span>{{round}}</span></div>
+        <span>SCORE {{score}}</span>
     </div>
   </div>
 </div>
