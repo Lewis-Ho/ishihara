@@ -23,17 +23,34 @@ body, html {
 .menu-sub-btn {
   color: #757575;
 }
-.scoreboard{
-  left: 80%;
+.scoreboard {
+  left: 85%;
   top: 20%;
   position: absolute;
   margin-right: -50%;
   transform: translate(-50%, -50%);
+  text-align: center;
 }
-#score {
+.scoreboard div {
+  border-radius: 2px;
+/*  background-color: #F5F5F5;*/
+/*  border: solid #ccc 1px;*/
+  -webkit-box-shadow: 0 0 0 4px 
+  box-shadow: 0 0 0 4px rgba(0,0,0,0.1);
+/*  padding: 10px;*/
+  padding: 10% 15% 10% 15%
 /*
-  position:absolute;
-  top:0;
-  left:0;
+  width: 100px;
+  padding: 50px;
 */
+}
+#top-data {
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  margin-top: 2em;
+  font-size: 2em;
+}
+#low-data {
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
 }

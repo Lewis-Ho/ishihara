@@ -12,10 +12,9 @@
       </div>
     </div>
     <div class="scoreboard" flex="33">
-      <div>
-        ROUND <span>{{round}}</span>
-      </div>
-      <div>SCORE {{score}}</div>
+      <div id="top-data">ROUND {{round}}</div>
+      <div id="low-data">SCORE {{score}}</div>
     </div>
+    <md-progress-circular md-mode="determinate" value="{{time}}" md-diameter="75%"></md-progress-circular>
   </div>
 </div>
