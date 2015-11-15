@@ -47,14 +47,14 @@ function resizeDiv(window, array) {
 }
 
 app.controller('GameCtrl', ['$scope', '$window', 'scoreboard', function($scope, $window, scoreboard) {
-//  $scope.score = scoreboard.getScore();
-//  $scope.round = scoreboard.getRound();
-}]);
-
-app.controller('ScoreboardCtrl', ['$scope', '$window', 'scoreboard', function($scope, $window, scoreboard) {
   $scope.score = scoreboard.getScore();
   $scope.round = scoreboard.getRound();
 }]);
+
+//app.controller('ScoreboardCtrl', ['$scope', '$window', 'scoreboard', function($scope, $window, scoreboard) {
+////  $scope.score = scoreboard.getScore();
+////  $scope.round = scoreboard.getRound();
+//}]);
 
 app.controller('GameBoardCtrl', ['$scope', '$window', 'scoreboard', function($scope, $window, scoreboard) {
     // Init Setting
@@ -64,6 +64,8 @@ app.controller('GameBoardCtrl', ['$scope', '$window', 'scoreboard', function($sc
     var vph = $window.innerHeight;
     var btnSize = 0;
     $scope.boxes = [];
+//    $scope.$parent.score = scoreboard.getScore();
+//    $scope.round = scoreboard.getRound();
   
     for(var i=0; i<4; i++){
       var newBox = new box(i, 0, ranColor[0]);
@@ -88,10 +90,11 @@ app.controller('GameBoardCtrl', ['$scope', '$window', 'scoreboard', function($sc
     // Check current button's flag: if true, resize array; if false, size remain but change color set
     $scope.check = function(flag) {
       scoreboard.updateRound();
-      $scope.round = scoreboard.getRound();
+      $scope.$parent.round = scoreboard.getRound();
+      //$scope.round = scoreboard.getRound();
       if (flag==1) {
         scoreboard.updateScore();
-        $scope.score = scoreboard.getScore();
+        $scope.$parent.score = scoreboard.getScore();
         if (vpw<vph){
           if (vpw>((boxesSize+1)*52)){
             console.log("vpw");
