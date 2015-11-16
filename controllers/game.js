@@ -11,12 +11,47 @@
 var app = angular.module('starterApp');
 
 var colorSet = [
-  ['#fbe9e7', '#ffccbc'], 
-  ['#3399ff', '#3333ff'],
-  ['#669900', '#1a9900'],
+  // HARD
+  ['#bfff80', '#ccff99'],
+  ['#ffff99', '#ffffb3'], 
+  // STARTER
+  ['#fbe9e7', '#f8d7d3'], 
+  ['#3399ff', '#007fff'],
+  ['#669900', '#558000'],
   ['#99001a', '#993300'],
-  ['#cfd8dc', '#90a4ae'],
-  ['#66ff66', '#66ffb3']
+  ['#cfd8dc', '#b5c3c9'],
+  ['#99ffcc', '#66ffb3'],
+  ['#b3d9ff', '#99ccff'],
+  ['#b3b3ff', '#ccccff'],
+  ['#ff8080', '#ff9999'],
+  ['#66ffcc', '#4dffc3'],
+  // BLUE
+  ['#006699', '#0077b3'], 
+  ['#0099cc', '#00ace6'],
+  ['#003399', '#002b80'],
+  ['#336699', '#3973ac'],
+  ['#003366', '#00264d'],
+  ['#004466', '#00334d'],
+  // GREEN
+  ['#669999', '#5c8a8a'], 
+  ['#39ac73', '#339966'],
+  ['#d9f2e6', '#ecf9f2'],
+  ['#2d862d', '#339933'],
+  ['#004d00', '#006600'],
+  ['#001a00', '#003300'],
+  // RED
+  ['#ff0066', '#e6005c'], 
+  ['#ff4dd2', '#ff33cc'],
+  ['#d633ff', '#e066ff'],
+  ['#b82e8a', '#cc3399'],
+  ['#cc6699', '#d279a6'],
+  ['#cc0000', '#e60000'],
+  ['#ff3300', '#ff5c33'], 
+  ['#ff9933', '#ff8000'],
+  ['#b35900', '#cc6600'],
+  ['#4d1900', '#662200'],
+  ['#cc0044', '#990033'],
+  ['#33001a', '#4d0026']
 ];
 
 // button object
@@ -51,7 +86,7 @@ app.controller('GameCtrl', ['$scope', '$window', '$interval', 'scoreboard', func
   $scope.round = scoreboard.getRound();
   var self = $scope,  j= 0, counter = 0;
 
-  self.modes = [ ];
+  self.modes = [];
   self.activated = true;
   self.time = 0;
 
@@ -59,8 +94,8 @@ app.controller('GameCtrl', ['$scope', '$window', '$interval', 'scoreboard', func
    * Turn off or on the 5 themed loaders
    */
   self.toggleActivation = function() {
-      if ( !self.activated ) self.modes = [ ];
-      if (  self.activated ) j = counter = 0;
+    if ( !self.activated ) self.modes = [];
+    if (  self.activated ) j = counter = 0;
   };
 
   // Iterate every 100ms, non-stop
@@ -78,7 +113,7 @@ app.controller('GameCtrl', ['$scope', '$window', '$interval', 'scoreboard', func
 //    }
 //    if ( counter++ % 4 == 0 ) j++;
 
-  }, 100, 0, true);
+  }, 300, 0, true);
 }]);
 
 app.controller('GameBoardCtrl', ['$scope', '$window', 'scoreboard', function($scope, $window, scoreboard) {
@@ -136,7 +171,11 @@ app.controller('GameBoardCtrl', ['$scope', '$window', 'scoreboard', function($sc
       console.log(vpw + ' ' + boxesSize);
       // Create new set of boxes, final boxesSize will be ^2 
       $scope.boxes = [];
-      ranColor = randomPick(colorSet);
+      var prevColor = ranColor;
+      do {
+        ranColor = randomPick(colorSet)
+      } while (ranColor == prevColor);
+//      ranColor = randomPick(colorSet);
       for(var i=0; i<boxesSize; i++){
         for(var j=0; j<boxesSize; j++){
           var newBox = new box($scope.boxes.length, 0, ranColor[0]);
