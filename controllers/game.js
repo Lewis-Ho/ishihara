@@ -84,35 +84,16 @@ function resizeDiv(window, array) {
 app.controller('GameCtrl', ['$scope', '$window', '$interval', 'scoreboard', function($scope, $window, $interval, scoreboard) {
   $scope.score = scoreboard.getScore();
   $scope.round = scoreboard.getRound();
-  var self = $scope,  j= 0, counter = 0;
-
-  self.modes = [];
-  self.activated = true;
+  var self = $scope;
   self.time = 0;
-
-  /**
-   * Turn off or on the 5 themed loaders
-   */
-  self.toggleActivation = function() {
-    if ( !self.activated ) self.modes = [];
-    if (  self.activated ) j = counter = 0;
-  };
-
-  // Iterate every 100ms, non-stop
+  
+  // Iterate every 300ms, non-stop
   $interval(function() {
     // Increment the Determinate loader
     self.time += 1;
     if (self.time > 100) {
       self.time = 0;
     }
-
-    // Incrementally start animation the five (5) Indeterminate,
-    // themed progress circular bars
-//    if ( (j < 5) && !self.modes[j] && self.activated ) {
-//      self.modes[j] = 'indeterminate';
-//    }
-//    if ( counter++ % 4 == 0 ) j++;
-
   }, 300, 0, true);
 }]);
 
