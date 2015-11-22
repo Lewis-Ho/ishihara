@@ -15,6 +15,9 @@
       <div id="top-data">ROUND {{round}}</div>
       <div id="low-data">SCORE {{score}}</div>
     </div>
-    <md-progress-circular md-mode="determinate" value="{{time}}" md-diameter="75%"></md-progress-circular>
+    <div style="position:relative;">
+      <md-progress-circular class="timer md-warn" md-mode="determinate" value="{{roundTime}}" md-diameter="20%"></md-progress-circular>
+      <md-progress-circular class="timer" md-mode="determinate" value="{{time}}" md-diameter="75%"></md-progress-circular>
+    </div>
   </div>
 </div>

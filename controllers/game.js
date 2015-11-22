@@ -81,20 +81,64 @@ function resizeDiv(window, array) {
   return (window-(Math.sqrt(array.length)*25))/Math.sqrt(array.length);
 }
 
-app.controller('GameCtrl', ['$scope', '$window', '$interval', 'scoreboard', function($scope, $window, $interval, scoreboard) {
+// Opening dialog provide restruction and start game button
+//function openingDialog($mdDialog) {
+//  var confirm = $mdDialog.confirm()
+//          .title('Title Here')
+//          .textContent('Please select the color that is different than others. To get the best result, please take your time to pick the most right of box based on your judgement. Time is only the second factor.')
+//          .ariaLabel('Lucky day')
+//          .targetEvent(ev)
+//          .ok('I Got it!');
+//  $mdDialog.show(confirm).then(function() {
+//    // Iterate every 300ms, non-stop
+//    $interval(function() {
+//      // Increment the Determinate loader
+//      self.time += 1;
+//      if (self.time > 100) {
+//        self.time = 0;
+//      }
+//    }, 300, 0, true);
+//  });
+////    $scope.status = 'You decided to get rid of your debt.';
+////  }, function() {
+////    $scope.status = 'You decided to keep your debt.';
+////  });
+//}
+
+
+app.controller('GameCtrl', ['$scope', '$window', '$interval', '$mdDialog', 'scoreboard', function($scope, $window, $interval, $mdDialog, scoreboard) {
   $scope.score = scoreboard.getScore();
   $scope.round = scoreboard.getRound();
   var self = $scope;
   self.time = 0;
+  showAlert($mdDialog, function(){
+    callback();
+  });
   
-  // Iterate every 300ms, non-stop
-  $interval(function() {
-    // Increment the Determinate loader
-    self.time += 1;
-    if (self.time > 100) {
-      self.time = 0;
-    }
-  }, 300, 0, true);
+  function showAlert($mdDialog, callback) {
+  var alert = $mdDialog.alert({
+    title: 'Attention',
+    content: 'Please select the color that is different than others. To get the best result, please take your time to pick the most right of box based on your judgement. Time is only the second factor.',
+    ok: 'I Got It!'
+  });
+  $mdDialog
+    .show( alert )
+    .finally(function() {
+      alert = undefined;
+      callback();
+    });
+  }
+  
+  function callback(){
+    // Iterate every 300ms, non-stop
+    $interval(function() {
+      // Increment the Determinate loader
+      self.time += 1;
+      if (self.time > 100) {
+        self.time = 0;
+      }
+    }, 300, 0, true);
+  };
 }]);
 
 app.controller('GameBoardCtrl', ['$scope', '$window', 'scoreboard', function($scope, $window, scoreboard) {
