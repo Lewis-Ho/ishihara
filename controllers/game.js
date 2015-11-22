@@ -111,6 +111,7 @@ app.controller('GameCtrl', ['$scope', '$window', '$interval', '$mdDialog', 'scor
   $scope.round = scoreboard.getRound();
   var self = $scope;
   self.time = 0;
+  self.roundTime = 0;
   showAlert($mdDialog, function(){
     callback();
   });
@@ -138,6 +139,15 @@ app.controller('GameCtrl', ['$scope', '$window', '$interval', '$mdDialog', 'scor
         self.time = 0;
       }
     }, 300, 0, true);
+    
+    // Iterate every 30ms, non-stop
+    $interval(function() {
+      // Increment the Determinate loader
+      self.roundTime += 1;
+      if (self.roundTime > 100) {
+        self.roundTime = 0;
+      }
+    }, 30, 0, true);
   };
 }]);
 
