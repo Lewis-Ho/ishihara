@@ -106,60 +106,110 @@ function resizeDiv(window, array) {
 //}
 
 
-app.controller('GameCtrl', ['$scope', '$window', '$interval', '$mdDialog', 'scoreboard', function($scope, $window, $interval, $mdDialog, scoreboard) {
+app.controller('GameCtrl', ['$scope', '$window', 'scoreboard', function($scope, $window, scoreboard) {
   $scope.score = scoreboard.getScore();
   $scope.round = scoreboard.getRound();
   var self = $scope;
   self.time = 0;
   self.roundTime = 0;
-  showAlert($mdDialog, function(){
-    callback();
-  });
-  
-  function showAlert($mdDialog, callback) {
-  var alert = $mdDialog.alert({
-    title: 'Attention',
-    content: 'Please select the color that is different than others. To get the best result, please take your time to pick the most right of box based on your judgement. Time is only the second factor.',
-    ok: 'I Got It!'
-  });
-  $mdDialog
-    .show( alert )
-    .finally(function() {
-      alert = undefined;
-      callback();
-    });
-  }
-  
-  function callback(){
-    // Iterate every 300ms, non-stop
-    $interval(function() {
-      // Increment the Determinate loader
-      self.time += 1;
-      if (self.time > 100) {
-        self.time = 0;
-      }
-    }, 300, 0, true);
-    
-    // Iterate every 30ms, non-stop
-    $interval(function() {
-      // Increment the Determinate loader
-      self.roundTime += 1;
-      if (self.roundTime > 100) {
-        self.roundTime = 0;
-      }
-    }, 30, 0, true);
-  };
 }]);
 
-app.controller('GameBoardCtrl', ['$scope', '$window', 'scoreboard', function($scope, $window, scoreboard) {
-    // Init Setting
+app.controller('GameBoardCtrl', ['$scope', '$window', '$interval', '$mdDialog', 'scoreboard', function($scope, $window, $interval, $mdDialog, scoreboard) {
+    // Init GAME Setting
     var boxesSize = 2;
     var ranColor = randomPick(colorSet);
     var vpw = $window.innerWidth;
     var vph = $window.innerHeight;
     var btnSize = 0;
     $scope.boxes = [];
+    showAlert($mdDialog, function(){
+      callback();
+    });
+
+    ///// STARTING DIALOG FUNCTIONS /////
+    function showAlert($mdDialog, callback) {
+      var alert = $mdDialog.alert({
+            title: 'Attention',
+            content: 'Please select the color that is different than others. To get the best result, please take your time to pick the most right of box based on your judgement. Time is only the second factor.',
+            ok: 'I Got It!'
+      });
+      $mdDialog.show( alert ).finally(function() {
+        alert = undefined;
+        callback();
+      });
+    }
+    function endGameMessage($mdDialog) {
+      // Game End Message
+      var endGameAlert = $mdDialog.confirm()
+                                  .title('GAME FINISHED!')
+                                  .content('Thank you for playing.')
+                                  .ok('Again!')
+                                  .cancel('Result');
+      $mdDialog.show(endGameAlert).then(function() {
+        console.log("game again");
+      }, function() {
+        console.log("result");
+      });
+    }
+    function callback(){
+      var roundTimer = $interval(function() {
+        // Increment the Determinate loader
+        $scope.$parent.roundTime += 1;
+        if ($scope.$parent.roundTime > 100) {
+          $scope.$parent.roundTime = 0;
+          scoreboard.updateRound();
+          $scope.$parent.round = scoreboard.getRound();
+          $scope.boxes = [];
+          var prevColor = ranColor;
+          
+          // Change color set for next round
+          do {
+            ranColor = randomPick(colorSet)
+          } while (ranColor == prevColor);
+    //      ranColor = randomPick(colorSet);
+          for(var i=0; i<boxesSize; i++){
+            for(var j=0; j<boxesSize; j++){
+              var newBox = new box($scope.boxes.length, 0, ranColor[0]);
+              $scope.boxes.push(newBox);
+            }
+          }
+          // Pick one button and change its flag
+          var flagObj = randomPick($scope.boxes);
+          flagObj.flag = 1;
+          flagObj.color = ranColor[1];
+
+          // Button size based on screen ratio, use screen widht if height is large, etc.
+          if (vpw<vph){
+            btnSize = resizeDiv(vpw, $scope.boxes);
+          } else {
+            btnSize = resizeDiv(vph, $scope.boxes);
+          }
+          $scope.btnWidth = btnSize+'px';
+
+          // Chunk button array
+          $scope.boxes = chunkArray($scope.boxes, Math.sqrt($scope.boxes.length));
+        }
+      }, 30, 0, true);
+      
+      // Iterate every 300ms, non-stop
+      var gameTimer = $interval(function() {
+        // Increment the Determinate loader
+        $scope.$parent.time += 1;
+        if ($scope.$parent.time > 100) {
+          $scope.$parent.time = 0;
+          endGameMessage($mdDialog);
+          // Reset game variable
+          $scope.boxes = [];
+          $scope.$parent.time = 0;
+          $scope.$parent.roundTime = 0;
+          $interval.cancel(roundTimer);
+          $interval.cancel(gameTimer);
+        }
+      }, 50, 0, true);
+    };
+    ///// STARTING DIALOG FUNCTIONS END /////
   
+    // INIT GAME 
     for(var i=0; i<4; i++){
       var newBox = new box(i, 0, ranColor[0]);
       $scope.boxes.push(newBox);
@@ -184,6 +234,7 @@ app.controller('GameBoardCtrl', ['$scope', '$window', 'scoreboard', function($sc
     $scope.check = function(flag) {
       scoreboard.updateRound();
       $scope.$parent.round = scoreboard.getRound();
+      $scope.$parent.roundTime = 0;
       //$scope.round = scoreboard.getRound();
       if (flag==1) {
         scoreboard.updateScore();
@@ -233,7 +284,8 @@ app.controller('GameBoardCtrl', ['$scope', '$window', 'scoreboard', function($sc
       // Chunk button array
       $scope.boxes = chunkArray($scope.boxes, Math.sqrt($scope.boxes.length));
     };
-  }]);
+  }]
+);
 
 // Factory //
 app.factory('scoreboard', function(){
@@ -264,6 +316,22 @@ app.factory('scoreboard', function(){
   
   return service;
 })
+
+//app.factory('timer', function(){
+//  var service = {};
+//  var _roundTimer = 0;
+//  
+//  service.getRoundTimer = function(){
+//    return _roundTimer;
+//  }
+//  service.updateRoundTimer = function(){
+//    _roundTimer = _roundTimer + 1;
+//  }
+//  service.resetRoundTimer = function(){
+//    _roundTimer = 0;
+//  }
+//  return service;
+//})
 
   
     // Functions
