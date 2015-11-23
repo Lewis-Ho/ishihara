@@ -146,7 +146,7 @@ app.controller('GameBoardCtrl', ['$scope', '$window', '$interval', '$mdDialog', 
         controller: DialogController,
         templateUrl: '../views/dialog.html',
         parent: angular.element(document.body),
-        clickOutsideToClose:true
+        clickOutsideToClose:false
       }).then(function(answer) {
         if (answer == 'again') {
           console.log("game again");
@@ -231,6 +231,7 @@ app.controller('GameBoardCtrl', ['$scope', '$window', '$interval', '$mdDialog', 
           endGameMessage($mdDialog);
           // Reset game variable
           $scope.boxes = [];
+          boxesSize = 2;
           $scope.$parent.time = 0;
           $scope.$parent.roundTime = 0;
           $interval.cancel(roundTimer);
@@ -240,7 +241,7 @@ app.controller('GameBoardCtrl', ['$scope', '$window', '$interval', '$mdDialog', 
     };
     ///// STARTING DIALOG FUNCTIONS END /////
   
-    // INIT GAME
+    ///// INIT GAME FUNCTIONS /////
     function initGame() {
       for(var i=0; i<4; i++){
         var newBox = new box(i, 0, ranColor[0]);
@@ -261,6 +262,7 @@ app.controller('GameBoardCtrl', ['$scope', '$window', '$interval', '$mdDialog', 
       // Chunk button array
       $scope.boxes = chunkArray($scope.boxes, Math.sqrt($scope.boxes.length));
     };
+    ///// INIT GAME FUNCTIONS END /////
   
     ///// NG-CLICK FUNCTION /////
     // Check current button's flag: if true, resize array; if false, size remain but change color set

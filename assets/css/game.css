@@ -15,11 +15,13 @@ body, html {
   min-width: 36px;
   min-height: 36px;
 }
+/*
 .menu-btn {
   position:absolute;
-  bottom:0;
-  right:0;
+  bottom:2%;
+  right:2%;
 }
+*/
 .menu-sub-btn {
   color: #757575;
 }
