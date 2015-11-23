@@ -122,11 +122,12 @@ app.controller('GameBoardCtrl', ['$scope', '$window', '$interval', '$mdDialog', 
     var vph = $window.innerHeight;
     var btnSize = 0;
     $scope.boxes = [];
+    initGame();
     showAlert($mdDialog, function(){
       callback();
     });
 
-    ///// STARTING DIALOG FUNCTIONS /////
+    ///// START GAME DIALOG FUNCTIONS /////
     function showAlert($mdDialog, callback) {
       var alert = $mdDialog.alert({
             title: 'Attention',
@@ -138,19 +139,50 @@ app.controller('GameBoardCtrl', ['$scope', '$window', '$interval', '$mdDialog', 
         callback();
       });
     }
+  
+    ///// END GAME DIALOG FUNCTIONS /////
     function endGameMessage($mdDialog) {
-      // Game End Message
-      var endGameAlert = $mdDialog.confirm()
-                                  .title('GAME FINISHED!')
-                                  .content('Thank you for playing.')
-                                  .ok('Again!')
-                                  .cancel('Result');
-      $mdDialog.show(endGameAlert).then(function() {
-        console.log("game again");
+      $mdDialog.show({
+        controller: DialogController,
+        templateUrl: '../views/dialog.html',
+        parent: angular.element(document.body),
+        clickOutsideToClose:true
+      }).then(function(answer) {
+        if (answer == 'again') {
+          console.log("game again");
+          // Reset Game Record
+          scoreboard.resetRound();
+          scoreboard.resetScore();
+          $scope.$parent.round = scoreboard.getRound();
+          $scope.$parent.score = scoreboard.getScore();
+          initGame();
+          callback();
+        } else {
+          // Compare Result
+          console.log("result");
+          alert("Sorry, the current feature is not yet open.");
+        }
       }, function() {
-        console.log("result");
+        console.log("Cancel");
       });
     }
+    // Dialog Controller
+    function DialogController($scope, $mdDialog) {
+      $scope.round = scoreboard.getRound();
+      $scope.score = scoreboard.getScore();
+      $scope.hide = function() {
+        $mdDialog.hide();
+      };
+      $scope.cancel = function() {
+        $mdDialog.cancel();
+      };
+      $scope.answer = function(answer) {
+        $mdDialog.hide(answer);
+      };
+    }
+    ///// END GAME DIALOG FUNCTIONS END /////
+  
+    ///// GAME START CALLBACK FROM DIALOG BUTTON /////
     function callback(){
       var roundTimer = $interval(function() {
         // Increment the Determinate loader
@@ -166,7 +198,6 @@ app.controller('GameBoardCtrl', ['$scope', '$window', '$interval', '$mdDialog', 
           do {
             ranColor = randomPick(colorSet)
           } while (ranColor == prevColor);
-    //      ranColor = randomPick(colorSet);
           for(var i=0; i<boxesSize; i++){
             for(var j=0; j<boxesSize; j++){
               var newBox = new box($scope.boxes.length, 0, ranColor[0]);
@@ -209,25 +240,27 @@ app.controller('GameBoardCtrl', ['$scope', '$window', '$interval', '$mdDialog', 
     };
     ///// STARTING DIALOG FUNCTIONS END /////
   
-    // INIT GAME 
-    for(var i=0; i<4; i++){
-      var newBox = new box(i, 0, ranColor[0]);
-      $scope.boxes.push(newBox);
-    }
-    // Randomly pick button and change flag
-    var flagObj = randomPick($scope.boxes);
-    flagObj.flag = 1;
-    flagObj.color = ranColor[1];
-    
-    // Button size based on screen ratio, use screen widht if height is large, etc.
-    if (vpw<vph){
-      btnSize = resizeDiv(vpw, $scope.boxes);
-    } else {
-      btnSize = resizeDiv(vph, $scope.boxes);
-    }
-    $scope.btnWidth = btnSize+'px';
-    // Chunk button array
-    $scope.boxes = chunkArray($scope.boxes, Math.sqrt($scope.boxes.length));
+    // INIT GAME
+    function initGame() {
+      for(var i=0; i<4; i++){
+        var newBox = new box(i, 0, ranColor[0]);
+        $scope.boxes.push(newBox);
+      }
+      // Randomly pick button and change flag
+      var flagObj = randomPick($scope.boxes);
+      flagObj.flag = 1;
+      flagObj.color = ranColor[1];
+
+      // Button size based on screen ratio, use screen widht if height is large, etc.
+      if (vpw<vph){
+        btnSize = resizeDiv(vpw, $scope.boxes);
+      } else {
+        btnSize = resizeDiv(vph, $scope.boxes);
+      }
+      $scope.btnWidth = btnSize+'px';
+      // Chunk button array
+      $scope.boxes = chunkArray($scope.boxes, Math.sqrt($scope.boxes.length));
+    };
   
     ///// NG-CLICK FUNCTION /////
     // Check current button's flag: if true, resize array; if false, size remain but change color set
@@ -299,7 +332,9 @@ app.factory('scoreboard', function(){
   }
   service.updateScore = function(){
     _score = _score + 1;
-    console.log(_score);
+  }
+  service.resetScore = function(){
+    _score = 0;
   }
   service.getRound = function(){
     return _round;
@@ -307,58 +342,18 @@ app.factory('scoreboard', function(){
   service.updateRound = function(){
     _round = _round + 1;
   }
+  service.resetRound = function(){
+    _round = 0;
+  }
   service.setHistory = function(history){
     _hostory = history;
   }
   service.getHistory = function(){
     return _hostory;
   }
+  service.resetHistory = function(){
+    _hostory = '';
+  }
   
   return service;
 })
-
-//app.factory('timer', function(){
-//  var service = {};
-//  var _roundTimer = 0;
-//  
-//  service.getRoundTimer = function(){
-//    return _roundTimer;
-//  }
-//  service.updateRoundTimer = function(){
-//    _roundTimer = _roundTimer + 1;
-//  }
-//  service.resetRoundTimer = function(){
-//    _roundTimer = 0;
-//  }
-//  return service;
-//})
-
-  
-    // Functions
-    //game.boxes = [{1},{1},{1},{1}];
-  
-////    game.todos = [
-////      {text:'learn angular', done:true},
-////      {text:'build an angular app', done:false}];
-////
-////    game.addTodo = function() {
-////      game.todos.push({text:game.todoText, done:false});
-////      game.todoText = '';
-////    };
-////
-////    game.remaining = function() {
-////      var count = 0;
-////      angular.forEach(game.todos, function(todo) {
-////        count += todo.done ? 0 : 1;
-////      });
-////      return num;
-////    };
-////
-////    game.archive = function() {
-////      var oldTodos = game.todos;
-////      game.todos = [];
-////      angular.forEach(oldTodos, function(todo) {
-////        if (!todo.done) game.todos.push(todo);
-////      });
-////    };
-//  });
