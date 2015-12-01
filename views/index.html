@@ -8,7 +8,8 @@
     <meta name="description" content="">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
 
-    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic'>
+<!--    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic'>-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="node_modules/angular-material/angular-material.css"/>
     <link rel="stylesheet" href="assets/css/app.css"/>
   </head>
@@ -27,7 +28,6 @@
         <div ng-view=""></div>
       </div>
       
-
       <div class="menu-btn">
         <md-fab-speed-dial md-open="false" md-direction="up" class="md-scale md-fab-bottom-right">
           <md-fab-trigger>
@@ -35,18 +35,13 @@
               <md-icon md-svg-src="assets/svg/menu.svg"></md-icon>
             </md-button>
           </md-fab-trigger>
+          
           <md-fab-actions>
-    <!--
-            <md-button aria-label="Facebook" class="md-fab md-raised md-mini">
-              <md-icon md-svg-src="img/icons/facebook.svg" aria-label="Facebook"></md-icon>
-            </md-button>
-            <md-button aria-label="Google Hangout" class="md-fab md-raised md-mini">
-              <md-icon md-svg-src="img/icons/hangout.svg" aria-label="Google Hangout"></md-icon>
-            </md-button>
-    -->
-            <a href="#/"><md-button aria-label="Back" class="md-fab md-raised md-mini">
-              <md-icon class="menu-sub-btn" md-svg-src="assets/svg/back.svg" aria-label="Back"></md-icon>
-              </md-button></a>
+            <a href="#/">
+              <md-button aria-label="Back" class="md-fab md-raised md-mini">
+                <md-icon class="menu-sub-btn" md-svg-src="assets/svg/back.svg" aria-label="Back"></md-icon>
+              </md-button>
+            </a>
           </md-fab-actions>
         </md-fab-speed-dial>
       </div>

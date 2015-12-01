@@ -67,22 +67,43 @@ app.controller('GameBoardCtrl', ['$scope', '$window', '$interval', '$mdDialog', 
   var btnSize = 0;
   $scope.boxes = [];
   initGame();
-  showAlert($mdDialog, function(){
+  consentFormDialog($mdDialog, function(){
     callback();
   });
 
   ///// START GAME DIALOG FUNCTIONS /////
-  function showAlert($mdDialog, callback) {
-    var alert = $mdDialog.alert({
-          title: 'Attention',
-          content: 'Please select the color that is different than others. To get the best result, please take your time to pick the most right of box based on your judgement. Time is only the second factor.',
-          ok: 'I Got It!'
-    });
-    $mdDialog.show( alert ).finally(function() {
-      alert = undefined;
-      callback();
+  function consentFormDialog($mdDialog, callback) {
+    $mdDialog.show({
+      controller: DialogController,
+      templateUrl: '../views/consent-form.html',
+      parent: angular.element(document.body),
+      clickOutsideToClose:false
+    }).then(function(answer) {
+      if (answer == 'agree') {
+        console.log("agree");
+        callback();
+      } else {
+        // Compare Result
+        console.log("not agree");
+        $window.location.href = '/';
+//        alert("Sorry, the current feature is not yet open.");
+      }
+    }, function() {
+      console.log("Cancel");
     });
   }
+  
+//  function showAlert($mdDialog, callback) {
+//    var alert = $mdDialog.alert({
+//          title: 'Consent',
+//          content: 'Please select the color that is different than others. To get the best result, please take your time to pick the most right of box based on your judgement. Time is only the second factor.',
+//          ok: 'I Got It!'
+//    });
+//    $mdDialog.show( alert ).finally(function() {
+//      alert = undefined;
+//      callback();
+//    });
+//  }
   ///// END GAME DIALOG FUNCTIONS /////
   
   function endGameMessage($mdDialog) {
