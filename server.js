@@ -2,35 +2,92 @@
 var application_root = __dirname,
     express = require("express"),
     path = require("path");
+
 // Express web server
-var app = express();
+var app        = express();
+var bodyParser = require('body-parser');
+var Game       = require('./models/game');
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+var router = express.Router();              // get an instance of the express Router
+
+// middleware to use for all requests
+//router.use(function(req, res, next) {
+//    // do logging
+//    console.log('Something is happening.');
+//    next(); // make sure we go to the next routes and don't stop here
+//});
+
+// test route to make sure everything is working (accessed at GET http://localhost:8080/api)
+router.get('/', function(req, res) {
+    res.json({ message: 'hooray! welcome to our api!' });   
+});
+
+router.route('/:data')
+
+    // create a bear (accessed at POST http://localhost:8080/api/bears)
+    .post(function(req, res) {
+        
+        var game = new Game();      // create a new instance of the Bear model
+        console.log("server Start");
+        console.log(req.body);
+        console.log(req.body.score);
+        console.log("server End");
+        game.round = req.body.round;  // set the bears name (comes from the request)
+        game.score = req.body.score;
+        game.age = req.body.age;
+        game.is_color_blind = req.body.is_color_blind;
+
+        // save the bear and check for errors
+        game.save(function(err) {
+            if (err)
+                res.send(err);
+
+            res.json({ message: 'Bear created!' });
+        });
+        
+    });
+
+app.use('/Game', router);
+
+//router.route('/Game')
+//
+//    // create a bear (accessed at POST http://localhost:8080/api/bears)
+//    .post(function(req, res) {
+//        
+//        //var bear = new Bear();      // create a new instance of the Bear model
+//        //bear.name = req.body.name;  // set the bears name (comes from the request)
+//      //console.log(req.body);
+//      res.json({ message: 'Bear created!' });
+//        // save the bear and check for errors
+////        bear.save(function(err) {
+////            if (err)
+////                res.send(err);
+////
+////            res.json({ message: 'Bear created!' });
+////        });
+//        
+//    });
+
 
 // set the view engine to ejs
 app.set('view engine', 'jade');
-//app.use(express.static('view'));
-//app.use(express.static('controllers'));
-//app.use(express.static('assets'));
 app.use(express.static(__dirname));
-console.log(__dirname);
 
-// Database
-//var databaseUrl = "test";
-//var collections = ["things"]
-//var db = require("mongojs").connect(databaseUrl, collections);
-
-// Express config
-//app.configure(function () {
-//  app.use(express.bodyParser());
-//  app.use(express.methodOverride());
-//  app.use(app.router);
-//  app.use(express.static(path.join(application_root, "public")));
-//  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
-//});
-
-//app.get('/', routes.index);
+// Route
 app.get('/', function(req, res) {
   res.render('index.jade');
 });
+
+//app.get('/api/contacts', api.contacts);
+//app.get('/api/contacts/:id', api.contact);
+//app.post('/api/contacts', api.createContact);
+//app.put('/api/contacts/:id', api.updateContact);
+//app.delete('/api/contacts/:id', api.destroyContact);
+//
+//app.get('*', routes.index);
 
 //app.get('/getangularusers', function (req, res) {
 //	res.header("Access-Control-Allow-Origin", "http://localhost");
@@ -74,4 +131,18 @@ app.get('/', function(req, res) {
 //});
 
 var port = process.env.PORT || 3000;
-    app.listen(port);
+app.listen(port);
+
+
+// Database
+/* prompt> */ var mongoose = require('mongoose');
+
+/* prompt> */ mongoose.connect('mongodb://localhost/test', function(err) {
+    if(err) {
+        console.log('connection error', err);
+    } else {
+        console.log('connection successful');
+    }
+});
+
+/////////////////
