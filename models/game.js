@@ -9,10 +9,3 @@ var mongoose = require('mongoose');
 });
 
 module.exports = mongoose.model('Game', GameSchema);
-
-//exports.createResult = function(req, res) {
-//  var game = new Game(req.params.round, req.params.score, req.params.age, req.params.is_color_blind);
-//  game.save();
-//  console.log(req.params.round);
-//  res.json(req.body);
-//};

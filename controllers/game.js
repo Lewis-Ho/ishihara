@@ -58,15 +58,6 @@ function resizeDiv(window, array) {
   return (window-(Math.sqrt(array.length)*25))/Math.sqrt(array.length);
 }
 
-
-app.controller('GameCtrl', ['$scope', '$window', 'scoreboard', function($scope, $window, scoreboard) {
-  $scope.score = scoreboard.getScore();
-  $scope.round = scoreboard.getRound();
-  var self = $scope;
-  self.time = 0;
-  self.roundTime = 0;
-}]);
-
 app.controller('GameBoardCtrl', ['$scope', '$window', '$interval', '$mdDialog', '$http', 'scoreboard', function($scope, $window, $interval, $mdDialog, $http, scoreboard) {
   // Init GAME Setting
   var boxesSize = 2;
@@ -232,6 +223,30 @@ app.controller('GameBoardCtrl', ['$scope', '$window', '$interval', '$mdDialog', 
   };
   ///// INIT GAME FUNCTIONS END /////
 
+  function resetRound(){
+    $scope.boxes = [];
+    boxesSize = 2;
+    $scope.$parent.time = 0;
+    $scope.$parent.roundTime = 0;
+    $interval.cancel(roundTimer);
+    $interval.cancel(gameTimer);
+    $scope.$parent.round = scoreboard.getRound();
+    $scope.$parent.score = scoreboard.getScore();
+  }
+  
+  function resetGame(){
+    $scope.boxes = [];
+    boxesSize = 2;
+    $scope.$parent.time = 0;
+    $scope.$parent.roundTime = 0;
+    scoreboard.resetRound();
+    scoreboard.resetScore();
+    $interval.cancel(roundTimer);
+    $interval.cancel(gameTimer);
+    $scope.$parent.round = scoreboard.getRound();
+    $scope.$parent.score = scoreboard.getScore();
+  }
+  
   ///// GAME FUNCTION /////
   // Check current button's flag: if true, resize array; if false, size remain but change color set
   $scope.check = function(flag) {
