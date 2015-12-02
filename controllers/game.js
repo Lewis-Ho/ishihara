@@ -126,6 +126,7 @@ app.controller('GameBoardCtrl', ['$scope', '$window', '$interval', '$mdDialog', 
         // Compare Result
         console.log("result");
         alert("Sorry, the current feature is not yet open.");
+        $window.location.href = '/#/Result';
       }
     }, function() {
       console.log("Cancel");

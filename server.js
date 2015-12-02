@@ -50,6 +50,15 @@ router.route('/:data')
         
     });
 
+router.route('/Result').get(function(req, res) {
+  console.log("in result");
+  Game.find(function(err, game) {
+    if (err)
+      res.send(err);
+    res.json(game);
+  });
+});
+
 app.use('/Game', router);
 
 //router.route('/Game')
