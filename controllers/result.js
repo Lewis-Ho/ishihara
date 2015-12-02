@@ -9,10 +9,24 @@
 
 var app = angular.module('starterApp');
   
-app.controller('ResultCtrl', function ($scope, $route, $routeParams, $location) {
+app.controller('ResultCtrl', function ($scope, $route, $routeParams, $location, $http) {
   $scope.$route = $route;
   $scope.$location = $location;
   $scope.$routeParams = $routeParams;
   console.log("ResultCtrl");
-  console.log($route);
+  console.log($routeParams);
+  
+//  $http.get('data/posts.json').
+//    success(function(data, status, headers, config) {
+//      $scope.posts = data;
+//    }).
+//    error(function(data, status, headers, config) {
+//      // log error
+//    });
+  
+  var request = $http.get('/Game/Result');
+  request.success(function(data){
+    console.log(data);
+  });
+  
 });

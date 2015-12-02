@@ -25,6 +25,25 @@ router.get('/', function(req, res) {
     res.json({ message: 'hooray! welcome to our api!' });   
 });
 
+router.route('/Result')
+  .get(function(req, res) {
+//  res.json({ message: ' result server' });   
+  console.log("result server");
+  
+  Game.find(function(err, games) {
+    if (err)
+      res.send(err);
+    //console.log(games);
+    res.json(games);
+  });
+});
+
+router.route('/Game/Result') 
+  .get(function(req, res) {
+    res.json({ message: 'game result server' });   
+    console.log("game result server");
+  });
+
 router.route('/:data')
 
     // create a bear (accessed at POST http://localhost:8080/api/bears)
@@ -49,15 +68,6 @@ router.route('/:data')
         });
         
     });
-
-router.route('/Result').get(function(req, res) {
-  console.log("in result");
-  Game.find(function(err, game) {
-    if (err)
-      res.send(err);
-    res.json(game);
-  });
-});
 
 app.use('/Game', router);
 

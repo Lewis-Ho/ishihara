@@ -16,7 +16,7 @@ angular
         controller: 'GameCtrl',
         controllerAs: 'game'
       })
-      .when('/Result', {
+      .when('/Game/Result', {
         templateUrl: 'views/result.html',
         controller: 'ResultCtrl',
         controllerAs: 'game'
