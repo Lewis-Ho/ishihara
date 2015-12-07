@@ -8,8 +8,8 @@
  */
 
 var app = angular.module('starterApp');
-  
-app.controller('ResultCtrl', function ($scope, $route, $routeParams, $location, $http) {
+
+app.controller('ResultCtrl', function ($scope, $route, $routeParams, $location, $http, $cookies) {
   $scope.$route = $route;
   $scope.$location = $location;
   $scope.$routeParams = $routeParams;
@@ -32,6 +32,11 @@ app.controller('ResultCtrl', function ($scope, $route, $routeParams, $location, 
     console.log(data);
     console.log(data.length);
     
+    
+    var score = $cookies.get('_s');
+    console.log("cookies: ");
+    console.log(score);
+    
     ///Test
 //    d3.select(".container").append("div").attr("class", "chart").selectAll("p")
 //    .data(data)
@@ -50,14 +55,12 @@ app.controller('ResultCtrl', function ($scope, $route, $routeParams, $location, 
     var margin = {top: 30, right: 10, bottom: 30, left: 50}
  
     var height = 400 - margin.top - margin.bottom,
-        width = 720 - margin.left - margin.right,
+        width = 200 - margin.left - margin.right,
         barWidth = 40,
         barOffset = 20;
-    
-    //console.log(average);
 
     //average-bar-chart
-    var aveChartData = [ 8, average ];
+    var aveChartData = [ score, average ];
     
     var yScale = d3.scale.linear()
         .domain([0, d3.max(aveChartData)])
@@ -71,7 +74,7 @@ app.controller('ResultCtrl', function ($scope, $route, $routeParams, $location, 
               .attr('width', width + margin.left + margin.right)
               .attr('height', height + margin.top + margin.bottom)
               .append('g')
-              .attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')')
+              .attr('transform', 'translate(' + (margin.left + 30) + ', ' + margin.top + ')')
               .selectAll('rect')
               .data(aveChartData)
               .enter()

@@ -2,7 +2,7 @@
 
 angular
   .module('starterApp', [
-    'ngMaterial','ngRoute'
+    'ngMaterial','ngRoute','ngCookies'
   ])
   .config(function ($routeProvider) {
     $routeProvider

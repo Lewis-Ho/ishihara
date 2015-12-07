@@ -58,7 +58,7 @@ function resizeDiv(window, array) {
   return (window-(Math.sqrt(array.length)*25))/Math.sqrt(array.length);
 }
 
-app.controller('GameBoardCtrl', ['$scope', '$window', '$interval', '$mdDialog', '$http', 'scoreboard', function($scope, $window, $interval, $mdDialog, $http, scoreboard) {
+app.controller('GameBoardCtrl', ['$scope', '$window', '$interval', '$mdDialog', '$http', '$cookies', 'scoreboard', function($scope, $window, $interval, $mdDialog, $http, $cookies, scoreboard) {
   // Init GAME Setting
   var boxesSize = 2;
   var ranColor = randomPick(colorSet);
@@ -207,6 +207,11 @@ app.controller('GameBoardCtrl', ['$scope', '$window', '$interval', '$mdDialog', 
           age: 18,
           is_color_blind: true
         };
+        // Set Cookies for result page data, later need to save time too so if time is not right then redirect to homepage
+        $cookies.put('_s', data.score);
+        var favoriteCookie = $cookies.get('_s');
+        console.log(favoriteCookie);
+        
         var request = $http.post('/Game/:data', data);
         request.success(function(data){
           console.log("controller start");
