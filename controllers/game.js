@@ -217,7 +217,7 @@ app.controller('GameBoardCtrl', ['$scope', '$window', '$interval', '$mdDialog', 
         // Show Dialog
         endGameMessage($mdDialog);
       }
-    }, 50, 0, true);
+    }, 150, 0, true);
   };
   ///// STARTING DIALOG FUNCTIONS END /////
   
