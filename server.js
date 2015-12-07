@@ -40,7 +40,7 @@ router.route('/Result')
 
 router.route('/Game/Result') 
   .get(function(req, res) {
-    res.json({ message: 'game result server' });   
+    res.json({ message: 'game result server' });
     console.log("game result server");
   });
 

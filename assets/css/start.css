@@ -39,9 +39,15 @@
   max-width: 300px;
 }
 
-/*
-@media screen and (max-height: 600px){
+
+@media screen and (max-height: 570px){
+  #welcome-desc-sec {
+    display: none;
+  }
+}
+
+@media screen and (max-height: 450px){
   #welcome-desc {
     display: none;
   }
-}*/
+}
