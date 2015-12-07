@@ -156,12 +156,22 @@ app.listen(port);
 // Database
 /* prompt> */ var mongoose = require('mongoose');
 
-/* prompt> */ mongoose.connect('mongodb://localhost/test', function(err) {
+var url = 'mongodb://Lewis:test@ds053668.mongolab.com:53668/ishihara';
+mongoose.connect(url, function(err) {
     if(err) {
         console.log('connection error', err);
     } else {
         console.log('connection successful');
     }
 });
+
+
+//mongoose.connect('mongodb://localhost/test', function(err) {
+//    if(err) {
+//        console.log('connection error', err);
+//    } else {
+//        console.log('connection successful');
+//    }
+//});
 
 /////////////////
