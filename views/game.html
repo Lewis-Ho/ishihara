@@ -4,17 +4,20 @@
 </head>
 <div>
   <div ng-controller="GameCtrl" layout="row" layout-wrap>
-    <div ng-controller="GameBoardCtrl" class="game-container" flex="66">
+<!--    <div ng-controller="GameBoardCtrl" class="game-container" flex="66">-->
+    <div ng-controller="GameBoardCtrl" class="game-container">
       <div layout="row" layout-align="space-around center" class="rows" ng-repeat="rows in boxes">
         <span class="row" ng-repeat="box in rows">
           <md-button aria-label="Click Me!" ng-style="{'background': box.color ,'width':btnWidth, 'height':btnWidth }" ng-click="check(box.flag)"></md-button>
         </span>
       </div>
     </div>
+<!--
     <div class="scoreboard" flex="33">
       <div id="top-data">ROUND {{round}}</div>
       <div id="low-data">SCORE {{score}}</div>
     </div>
+-->
     <div style="position:relative;">
       <md-progress-circular class="timer md-warn" md-mode="determinate" value="{{roundTime}}" md-diameter="50%"></md-progress-circular>
       <md-progress-circular class="timer" md-mode="determinate" value="{{time}}" md-diameter="75%"></md-progress-circular>

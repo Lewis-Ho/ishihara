@@ -58,6 +58,30 @@ function resizeDiv(window, array) {
   return (window-(Math.sqrt(array.length)*25))/Math.sqrt(array.length);
 }
 
+function resetRound(){
+  $scope.boxes = [];
+  boxesSize = 2;
+  $scope.$parent.time = 0;
+  $scope.$parent.roundTime = 0;
+  $interval.cancel(roundTimer);
+  $interval.cancel(gameTimer);
+  $scope.$parent.round = scoreboard.getRound();
+  $scope.$parent.score = scoreboard.getScore();
+}
+
+function resetGame(){
+  $scope.boxes = [];
+  boxesSize = 2;
+  $scope.$parent.time = 0;
+  $scope.$parent.roundTime = 0;
+  scoreboard.resetRound();
+  scoreboard.resetScore();
+  $interval.cancel(roundTimer);
+  $interval.cancel(gameTimer);
+  $scope.$parent.round = scoreboard.getRound();
+  $scope.$parent.score = scoreboard.getScore();
+}
+
 app.controller('GameBoardCtrl', ['$scope', '$window', '$interval', '$mdDialog', '$http', '$cookies', 'scoreboard', function($scope, $window, $interval, $mdDialog, $http, $cookies, scoreboard) {
   // Init GAME Setting
   var boxesSize = 2;
@@ -68,11 +92,11 @@ app.controller('GameBoardCtrl', ['$scope', '$window', '$interval', '$mdDialog', 
   $scope.boxes = [];
   initGame();
   consentFormDialog($mdDialog, function(){
-    callback();
+    startGame();
   });
 
-  ///// START GAME DIALOG FUNCTIONS /////
-  function consentFormDialog($mdDialog, callback) {
+  ///// DIALOG FUNCTIONS /////
+  function consentFormDialog($mdDialog, startGame) {
     $mdDialog.show({
       controller: DialogController,
       templateUrl: '../views/consent-form.html',
@@ -80,31 +104,15 @@ app.controller('GameBoardCtrl', ['$scope', '$window', '$interval', '$mdDialog', 
       clickOutsideToClose:false
     }).then(function(answer) {
       if (answer == 'agree') {
-        console.log("agree");
-        callback();
+        startGame();
       } else {
-        // Compare Result
-        console.log("not agree");
+        // Not agree, redirect to home page
         $window.location.href = '/';
-//        alert("Sorry, the current feature is not yet open.");
       }
     }, function() {
       console.log("Cancel");
     });
   }
-  
-//  function showAlert($mdDialog, callback) {
-//    var alert = $mdDialog.alert({
-//          title: 'Consent',
-//          content: 'Please select the color that is different than others. To get the best result, please take your time to pick the most right of box based on your judgement. Time is only the second factor.',
-//          ok: 'I Got It!'
-//    });
-//    $mdDialog.show( alert ).finally(function() {
-//      alert = undefined;
-//      callback();
-//    });
-//  }
-  ///// END GAME DIALOG FUNCTIONS /////
   
   function endGameMessage($mdDialog) {
     $mdDialog.show({
@@ -121,7 +129,7 @@ app.controller('GameBoardCtrl', ['$scope', '$window', '$interval', '$mdDialog', 
         $scope.$parent.round = scoreboard.getRound();
         $scope.$parent.score = scoreboard.getScore();
         initGame();
-        callback();
+        startGame();
       } else {
         // Compare Result
         console.log("result");
@@ -146,10 +154,12 @@ app.controller('GameBoardCtrl', ['$scope', '$window', '$interval', '$mdDialog', 
       $mdDialog.hide(answer);
     };
   }
-  ///// END GAME DIALOG FUNCTIONS END /////
+  ///// DIALOG FUNCTIONS END /////
+  
+
   
   ///// GAME START CALLBACK FROM DIALOG BUTTON /////
-  function callback(){
+  function startGame(){
     var roundTimer = $interval(function() {
       // Increment the Determinate loader
       $scope.$parent.roundTime += 1;
@@ -177,6 +187,7 @@ app.controller('GameBoardCtrl', ['$scope', '$window', '$interval', '$mdDialog', 
 
         // Button size based on screen ratio, use screen widht if height is large, etc.
         if (vpw<vph){
+          console.log(vpw,$scope.boxes);
           btnSize = resizeDiv(vpw, $scope.boxes);
         } else {
           btnSize = resizeDiv(vph, $scope.boxes);
@@ -186,7 +197,7 @@ app.controller('GameBoardCtrl', ['$scope', '$window', '$interval', '$mdDialog', 
         // Chunk button array
         $scope.boxes = chunkArray($scope.boxes, Math.sqrt($scope.boxes.length));
       }
-    }, 30, 0, true);
+    }, 60, 0, true);
 
     // Game Timer, End Game When Count to Zero
     var gameTimer = $interval(function() {
@@ -222,7 +233,7 @@ app.controller('GameBoardCtrl', ['$scope', '$window', '$interval', '$mdDialog', 
         // Show Dialog
         endGameMessage($mdDialog);
       }
-    }, 150, 0, true);
+    }, 450, 0, true);
   };
   ///// STARTING DIALOG FUNCTIONS END /////
   
@@ -248,30 +259,6 @@ app.controller('GameBoardCtrl', ['$scope', '$window', '$interval', '$mdDialog', 
     $scope.boxes = chunkArray($scope.boxes, Math.sqrt($scope.boxes.length));
   };
   ///// INIT GAME FUNCTIONS END /////
-
-  function resetRound(){
-    $scope.boxes = [];
-    boxesSize = 2;
-    $scope.$parent.time = 0;
-    $scope.$parent.roundTime = 0;
-    $interval.cancel(roundTimer);
-    $interval.cancel(gameTimer);
-    $scope.$parent.round = scoreboard.getRound();
-    $scope.$parent.score = scoreboard.getScore();
-  }
-  
-  function resetGame(){
-    $scope.boxes = [];
-    boxesSize = 2;
-    $scope.$parent.time = 0;
-    $scope.$parent.roundTime = 0;
-    scoreboard.resetRound();
-    scoreboard.resetScore();
-    $interval.cancel(roundTimer);
-    $interval.cancel(gameTimer);
-    $scope.$parent.round = scoreboard.getRound();
-    $scope.$parent.score = scoreboard.getScore();
-  }
   
   ///// GAME FUNCTION /////
   // Check current button's flag: if true, resize array; if false, size remain but change color set
