@@ -4,7 +4,7 @@ angular
   .module('starterApp', [
     'ngMaterial','ngRoute','ngCookies'
   ])
-  .config(function ($routeProvider) {
+  .config(function ($routeProvider, $mdThemingProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/start.html',
@@ -23,5 +23,10 @@ angular
       })
       .otherwise({
         redirectTo: '/'
+      });
+    $mdThemingProvider.theme('default')
+      .primaryPalette('blue-grey')
+      .warnPalette('blue-grey', {
+        'default': '300'
       });
   });

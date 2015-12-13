@@ -91,12 +91,13 @@ app.controller('GameBoardCtrl', ['$scope', '$window', '$interval', '$mdDialog', 
   var btnSize = 0;
   $scope.boxes = [];
   initGame();
-  consentFormDialog($mdDialog, function(){
-    startGame();
-  });
+//  consentFormDialog($mdDialog, function(){
+//    startGame();
+//  });
+  consentFormDialog($mdDialog);
 
   ///// DIALOG FUNCTIONS /////
-  function consentFormDialog($mdDialog, startGame) {
+  function consentFormDialog($mdDialog) {
     $mdDialog.show({
       controller: DialogController,
       templateUrl: '../views/consent-form.html',
@@ -104,13 +105,26 @@ app.controller('GameBoardCtrl', ['$scope', '$window', '$interval', '$mdDialog', 
       clickOutsideToClose:false
     }).then(function(answer) {
       if (answer == 'agree') {
-        startGame();
+        instructionDialog($mdDialog);
       } else {
         // Not agree, redirect to home page
         $window.location.href = '/';
       }
     }, function() {
       console.log("Cancel");
+    });
+  }
+  
+  function instructionDialog($mdDialog) {
+    $mdDialog.show({
+      controller: DialogController,
+      templateUrl: '../views/instruction.html',
+      parent: angular.element(document.body),
+      clickOutsideToClose:true
+    }).then(function() {
+      startGame();
+    }, function() {
+      startGame();
     });
   }
   

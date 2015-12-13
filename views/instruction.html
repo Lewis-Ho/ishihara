@@ -1,0 +1,28 @@
+<md-dialog aria-label="instruction"  ng-cloak>
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Instruction</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    
+    <md-dialog-content style="max-width:800px;max-height:810px; ">
+      <div style="text-align: center;">
+        <div class="">
+          <p>Pick the color that is different!<p>
+          <img style="width: 50%; height: auto;" ng-src="assets/img/instruction.png" alt="pic" />
+        </div>
+        
+        <md-dialog-actions layout="row" layout-align="center center">
+          <md-button flex="20" class="md-primary md-raised" ng-click="answer('agree')">
+           Got it!
+          </md-button>
+        </md-dialog-actions>
+      </div>
+    </md-dialog-content>
+  </form>
+</md-dialog>

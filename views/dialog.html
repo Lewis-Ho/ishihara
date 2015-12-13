@@ -17,16 +17,16 @@
         <p>Want to see how good is your standing? Please check out our analysis page for detail.</p>
     </md-dialog-content>
     <md-dialog-actions layout="row">
-      <md-button href="https://en.wikipedia.org/wiki/Color_blindness" target="_blank" md-autofocus>
-        More About Color Blindness
-      </md-button>
-      <span flex></span>
-      <md-button ng-click="answer('again')">
-       Play Again!
-      </md-button>
-      <md-button ng-click="answer('result')" style="margin-right:20px;">
-        Compare My Result
-      </md-button>
+      <div>
+        <md-button ng-click="answer('result')" style="margin-right:20px;">Compare My Result</md-button>
+        <md-button ng-click="answer('again')">Play Again!</md-button>
+      </div>
+<!--      <span flex></span>-->
+      <div>
+        <md-button href="https://en.wikipedia.org/wiki/Color_blindness" target="_blank" md-autofocus>
+          More About Color Blindness
+        </md-button>
+      </div>
     </md-dialog-actions>
   </form>
 </md-dialog>
