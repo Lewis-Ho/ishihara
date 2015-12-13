@@ -27,6 +27,6 @@ angular
     $mdThemingProvider.theme('default')
       .primaryPalette('blue-grey')
       .warnPalette('blue-grey', {
-        'default': '300'
+        'default': '400'
       });
   });
