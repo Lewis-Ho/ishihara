@@ -4,14 +4,24 @@
     <link rel="stylesheet" href="assets/css/result.css"/>
   </head>
   <body>
-    <div class="someclass">
-      <h2>Analyze Report</h2>
+    <h2>Analyze Report</h2>
+    
+    <div class="chart" layout="row" layout-wrap>
+      <div flex="33">
+        <h4>Population Average</h4>
+<!--        <p>Your score in population average.</p>-->
+        <div id="average-bar-chart"></div>
+      </div>
+      <div id="circular" flex="66">
+        <div id="div1"></div>
+        <div id="div2"></div>
+        <div id="div3"></div>
+      </div>
       
-      <p>Average</p>
-      <div id="average-bar-chart"></div>
-      
+<!--
       <p>Bar</p>
       <div id="bar-chart"></div>
+-->
     </div>
     
     <script type="text/javascript" src="d3.v2.min.js"></script>

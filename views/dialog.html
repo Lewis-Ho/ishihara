@@ -12,13 +12,13 @@
     <md-dialog-content style="max-width:800px;max-height:810px; ">
       <div class="md-dialog-content">
         <p>Thank you for playing.<p>
-        <p>You score {{score}} in {{round}} round.</p>
-        <p>If it is your first time to playing this game, we encourage you to take it as your final result. But it is welcome to take this test again if you want!</p>
-        <p>Want to see how good is your standing? Please check out our analysis page for detail.</p>
+        <p>You answer {{score}} right in {{round}} round.</p>
+        <p>If this is your first time to playing this game, we encourage you to take this as final result for the analysis. But it is welcome to take this test again if you want!</p>
+<!--        <p>Want to see how good is your standing? Please check out our analysis page for detail.</p>-->
     </md-dialog-content>
     <md-dialog-actions layout="row" layout-align="center center">
       <div>
-        <md-button ng-click="answer('result')" style="margin-right:20px;">Compare My Result</md-button>
+        <md-button ng-click="answer('result')" style="margin-right:20px;"><i class="fa fa-pie-chart"></i>Compare My Result</md-button>
         <md-button ng-click="answer('again')">Play Again!</md-button>
       </div>
 <!--      <span flex></span>-->

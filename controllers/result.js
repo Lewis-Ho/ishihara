@@ -9,33 +9,23 @@
 
 var app = angular.module('starterApp');
 
-app.controller('ResultCtrl', function ($scope, $route, $routeParams, $location, $http, $cookies) {
+app.controller('ResultCtrl', function ($scope, $route, $routeParams, $location, $http, $cookies, $window) {
   $scope.$route = $route;
   $scope.$location = $location;
   $scope.$routeParams = $routeParams;
   console.log("ResultCtrl");
   console.log($routeParams);
   
-//  var x = d3.scale.linear()
-//    .domain([0, d3.max(data)])
-//    .range([0, 420]);
-//  $http.get('data/posts.json').
-//    success(function(data, status, headers, config) {
-//      $scope.posts = data;
-//    }).
-//    error(function(data, status, headers, config) {
-//      // log error
-//    });
-  
   var request = $http.get('/Game/Result');
   request.success(function(data){
     console.log(data);
     console.log(data.length);
-    
-    
     var score = $cookies.get('_s');
     console.log("cookies: ");
     console.log(score);
+    var vpw = $window.innerWidth;
+    var vph = $window.innerHeight;
+    console.log(vpw);
     
     ///Test
 //    d3.select(".container").append("div").attr("class", "chart").selectAll("p")
@@ -54,10 +44,19 @@ app.controller('ResultCtrl', function ($scope, $route, $routeParams, $location, 
     
     var margin = {top: 30, right: 10, bottom: 30, left: 50}
  
-    var height = 400 - margin.top - margin.bottom,
-        width = 200 - margin.left - margin.right,
-        barWidth = 40,
-        barOffset = 20;
+    if (vpw > vph){
+      // Desktop
+      var height = vph/1.5 - margin.top - margin.bottom,
+        width = vpw/4 - margin.left,
+        barWidth = 60,
+        barOffset = vph/6;
+    } else {
+      // Mobile
+      var height = vph/1.5 - margin.top - margin.bottom,
+        width = vpw/1.5 - margin.left,
+        barWidth = 60,
+        barOffset = vph/11;
+    }
 
     //average-bar-chart
     var aveChartData = [ score, average ];
@@ -79,7 +78,7 @@ app.controller('ResultCtrl', function ($scope, $route, $routeParams, $location, 
               .data(aveChartData)
               .enter()
               .append('rect')
-              .style({'fill': '#3c763d', 'stroke': '#d6e9c6'})
+              .style({'fill': 'rgb(96,125,139)', 'stroke': '#d6e9c6'})
               .attr('width', barWidth)
               .attr('height', function (data) {
                 return data;
@@ -114,65 +113,85 @@ app.controller('ResultCtrl', function ($scope, $route, $routeParams, $location, 
     
     // Adding Horizontal and Vertical Guides
     var verticalGuideScale = d3.scale.linear()
-                              .domain([0, d3.max(aveChartData)])
-                              .range([height, 0])
+                               .domain([0, d3.max(aveChartData)])
+                               .range([height, 0])
  
     var vAxis = d3.svg.axis()
-        .scale(verticalGuideScale)
-        .orient('left')
-        .ticks(10)
+                  .scale(verticalGuideScale)
+                  .orient('left')
+                  .ticks(10)
 
     var verticalGuide = d3.select('svg').append('g')
     vAxis(verticalGuide)
     verticalGuide.attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')')
-    verticalGuide.selectAll('path')
-        .style({fill: 'none', stroke: "#3c763d"})
-    verticalGuide.selectAll('line')
-        .style({stroke: "#3c763d"})
+    verticalGuide.selectAll('path').style({fill: 'none', stroke: "rgb(96,125,139)"})
+    verticalGuide.selectAll('line').style({stroke: "rgb(96,125,139)"})
 
     var hAxis = d3.svg.axis()
-        .scale(xScale)
-        .orient('bottom')
-        .ticks(aveChartData.size)
+                  .scale(xScale)
+                  .tickFormat(function(d,i) { 
+                    if (i == 0)
+                      return 'Your Score';
+                    else
+                      return 'Average Score';
+                  })
+                  .orient('bottom')
 
     var horizontalGuide = d3.select('svg').append('g')
     hAxis(horizontalGuide)
     horizontalGuide.attr('transform', 'translate(' + margin.left + ', ' + (height + margin.top) + ')')
-    horizontalGuide.selectAll('path')
-        .style({fill: 'none', stroke: "#3c763d"})
-    horizontalGuide.selectAll('line')
-        .style({stroke: "#3c763d"});
-    ///
-    // END
+    horizontalGuide.selectAll('path').style({fill: 'none', stroke: "#3c763d"})
+    horizontalGuide.selectAll('line').style({stroke: "#3c763d"});
+    
+//    var bar = d3.select('#bar-chart').append('svg')
+//                .attr('width', width)
+//                .attr('height', height)
+//                .selectAll('rect').data(data)
+//                .enter().append('rect')
+//                .style({'fill': 'rgb(96,125,139)', 'stroke': 'rgb(96,125,139)'})
+//                .attr('width', barWidth)
+//                .attr('height', function (data) {
+//                    return data.score;
+//                })
+//                .attr('x', function (data, i) {
+//                    return i * (barWidth + barOffset);
+//                })
+//                .attr('y', function (data) {
+//                    return height - data.score;
+//                });
+    // Circle ---
+    var width = 960,
+    height = 500,
+    twoPi = 2 * Math.PI,
+    progress = 0,
+    total = 1308573, // must be hard-coded if server doesn't report Content-Length
+    formatPercent = d3.format(".0%");
+    
+    var arc = d3.svg.arc()
+        .startAngle(0)
+        .innerRadius(18)
+        .outerRadius(24);
 
+    var svg = d3.select("#circular").append("svg")
+        .attr("width", width)
+        .attr("height", height)
+      .append("g")
+        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-    var bar = d3.select('#bar-chart').append('svg')
-                .attr('width', width)
-                .attr('height', height)
-                .selectAll('rect').data(data)
-                .enter().append('rect')
-                .style({'fill': '#3c763d', 'stroke': '#d6e9c6'})
-                .attr('width', barWidth)
-                .attr('height', function (data) {
-                    return data.score;
-                })
-                .attr('x', function (data, i) {
-                    return i * (barWidth + barOffset);
-                })
-                .attr('y', function (data) {
-                    return height - data.score;
-                });
+    var meter = svg.append("g")
+        .attr("class", "progress-meter");
 
-//                       .attr("cx", 50)
-//                       .attr("cy", 50)
-//                       .attr("r", function (d) { return d; })
-//                       .style("fill", "green");
+    meter.append("path")
+        .attr("class", "background")
+        .attr("d", arc.endAngle(twoPi));
 
-//    function type(d) {
-//      d.value = +d.value; // coerce to number
-//      return d;
-//    }
-    ///
+    var foreground = meter.append("path")
+        .attr("class", "foreground");
+
+    var text = meter.append("text")
+        .attr("text-anchor", "middle")
+        .attr("dy", ".35em");
+
   });
   
 });
