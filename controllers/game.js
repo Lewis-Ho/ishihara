@@ -9,6 +9,8 @@
  */
 
 var app = angular.module('starterApp');
+//var userNameInput = element(by.model('user.age'));
+//var userLastInput = element(by.model('user.cd'));
 
 var colorSet = [
   // HARD
@@ -91,9 +93,6 @@ app.controller('GameBoardCtrl', ['$scope', '$window', '$interval', '$mdDialog', 
   var btnSize = 0;
   $scope.boxes = [];
   initGame();
-//  consentFormDialog($mdDialog, function(){
-//    startGame();
-//  });
   consentFormDialog($mdDialog);
 
   ///// DIALOG FUNCTIONS /////
@@ -108,6 +107,7 @@ app.controller('GameBoardCtrl', ['$scope', '$window', '$interval', '$mdDialog', 
         instructionDialog($mdDialog);
       } else {
         // Not agree, redirect to home page
+        alert("Sorry, you can only play the game with agreeing the consent form.");
         $window.location.href = '/';
       }
     }, function() {
@@ -158,6 +158,7 @@ app.controller('GameBoardCtrl', ['$scope', '$window', '$interval', '$mdDialog', 
   function DialogController($scope, $mdDialog) {
     $scope.round = scoreboard.getRound();
     $scope.score = scoreboard.getScore();
+    $scope.user = {age: "", cd: true};
     $scope.hide = function() {
       $mdDialog.hide();
     };
@@ -169,8 +170,6 @@ app.controller('GameBoardCtrl', ['$scope', '$window', '$interval', '$mdDialog', 
     };
   }
   ///// DIALOG FUNCTIONS END /////
-  
-
   
   ///// GAME START CALLBACK FROM DIALOG BUTTON /////
   function startGame(){

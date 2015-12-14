@@ -14,19 +14,28 @@
     <md-dialog-content style="max-width:800px;max-height:810px; ">
       <div class="md-dialog-content">
         <div class="consent-form">
-          <h4>Consent Form</h4><hr/>
           <p>To make this app getting better result for you, we need your help!</p>
+          <p>**You can choose to not answer this question.**</p>
+          <p><label>How old are you? <input type="text" name="age" min="1" ng-model="user.age" placeholder="e.g. 21"></label></p>
+<!--
+          <p>Did you diagnose with colour blindness? 
+            <input type="radio" name="cb" ng-model="user.cb" ng-value="yes">Yes
+            <input type="radio" name="nocd" ng-model="user.cd" ng-value="no">No<br/>
+          </p>
+-->
           
-          <p>By clicking agree button below, you are agreeing to the Terms and Conditions and your game result will be send to our database for research purposes.<p>
+          <div class="important">
+            <h4>Consent Form</h4>
+            <hr/>
+            <p>By clicking agree button below, you are agreeing to the Terms and Conditions 
+              and your game result will be send to our database for research purposes.<p>
+            <md-dialog-actions layout="row" layout-align="space-around center">
+              <md-button flex="40" class="md-primary md-raised" ng-click="answer('agree')">Agree</md-button>
+              <md-button flex="40" class="md-primary md-raised" ng-click="answer('not agree')" style="margin-right:20px;">Not Agree</md-button>
+            </md-dialog-actions>
+          </div>
         </div>
+      </div>
     </md-dialog-content>
-    <md-dialog-actions layout="row" layout-align="space-around center">
-      <md-button flex="40" class="md-primary md-raised" ng-click="answer('agree')">
-       Agree
-      </md-button>
-      <md-button flex="40" class="md-primary md-raised" ng-click="answer('not agree')" style="margin-right:20px;">
-        Not Agree
-      </md-button>
-    </md-dialog-actions>
   </form>
 </md-dialog>
