@@ -4,34 +4,33 @@
     <link rel="stylesheet" href="assets/css/result.css"/>
   </head>
   <body>
-    <div class="someclass" layout="column">
+    <div class="result" layout="column">
       <h2>Analyze Report</h2>
-      <h4>Reaction to RGB</h4>
-      <div id="pie-chart chart-canvas" layout="row">
-        <div ng-controller="pieOneCtrl">
-          <canvas id="doughnut" class="chart chart-doughnut" chart-data="data" chart-labels="labels" chart-colours="colours"></canvas>
-          <div class="donut-inner">
-            <h5>47 / 60 st</h5>
-            <span>(30 / 25 st)</span>
-          </div>
-        </div>
-        <div ng-controller="pieTwoCtrl">
-          <canvas id="doughnut" class="chart chart-doughnut" chart-data="data" chart-labels="labels" chart-colours="colours"></canvas>
-        </div>
-        <div ng-controller="pieThreeCtrl">
-          <canvas id="doughnut" class="chart chart-doughnut" chart-data="data" chart-labels="labels" chart-colours="colours"></canvas>
-        </div>
-      </div>
       
-      
-      <p>Average</p>
+      <h3>Score</h3>
+      <p>Rating to Population Score Average</p>
       <div ng-controller="resizeCtrl" id="average-bar-chart">
-        <canvas id="bar" class="chart chart-bar" chart-data="data" chart-labels="labels"> chart-series="series"</canvas>
+        <canvas id="bar" class="chart chart-bar" chart-data="data" chart-labels="labels" > chart-series="series"</canvas>
+<!--        <div id="average-desc">Testing</div>-->
       </div>
       
-      <p>Bar</p>
-      <div id="bar-chart"></div>
--->
+      <h3>Performance to RGB</h3>
+      <p>Estimated rating on how you response to red, green and blue color.</p>
+      <div class="pie-chart" layout="row">
+        <div class="chart-canvas" ng-controller="pieOneCtrl">
+          <canvas id="doughnut" class="chart chart-doughnut" chart-data="data" chart-labels="labels" chart-colours="colours"></canvas>
+<!--          <span class="chart-title" count-to="{{countNumOne}}" value="0" duration="1"></span>          -->
+        </div>
+        <div class="chart-canvas" ng-controller="pieTwoCtrl">
+          <canvas id="doughnut" class="chart chart-doughnut" chart-data="data" chart-labels="labels" chart-colours="colours"></canvas>
+<!--          <span class="chart-title" count-to="{{countNumTwo}}" value="0" duration="1"></span> -->
+        </div>
+        <div class="chart-canvas" ng-controller="pieThreeCtrl">
+          <canvas id="doughnut" class="chart chart-doughnut" chart-data="data" chart-labels="labels" chart-colours="colours"></canvas>
+<!--          <span class="chart-title" count-to="{{countNumThree}}" value="0" duration="1"></span> -->
+        </div>
+      </div>
+      
     </div>
     
     <script src="Chart.js"></script>

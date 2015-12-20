@@ -2,7 +2,7 @@
 
 angular
   .module('starterApp', [
-    'ngMaterial','ngRoute','ngCookies', 'ui.router','chart.js'
+    'ngMaterial','ngRoute','ngCookies', 'ui.router','chart.js','countTo'
   ])
   .config(function ($routeProvider, $mdThemingProvider) {
     $routeProvider
@@ -43,8 +43,6 @@ angular
         'hg': 'some default', 
         'hb': 'some default'
       }
-//       'tr', 'tg', 'tb', 'hr', 'hg', 'hb'
-//      ],
     })
 })
 .config(['ChartJsProvider', function (ChartJsProvider) {
@@ -59,13 +57,44 @@ angular
 //      datasetFill: false
 //    });
     ChartJsProvider.setOptions('Doughnut', {
-      responsive : true,
       segmentShowStroke : false,
-      segmentStrokeColor : "#fff",
-      segmentStrokeWidth : 2,
-      animationSteps : 120,
-      animationEasing : "easeOutBounce",
+//      segmentStrokeColor : "#fff",
+//      segmentStrokeWidth : 2,
+      animationSteps : 100,
+//      animationEasing : "easeOutBounce",
       animateRotate : true,
-      animateScale : true
+      animateScale : true,
+      showTooltips: false,
+      percentageInnerCutout : 70,
+      onAnimationComplete: function() {
+//        var canvasWidthvar = $('#doughnut').width();
+//        var canvasHeight = $('#doughnut').height();
+//        //this constant base on canvasHeight / 2.8em
+//        var constant = 114;
+//        var fontsize = (canvasHeight/constant).toFixed(2);
+//        ctx.font=fontsize +"em Verdana";
+//       ctx.textBaseline="middle"; 
+//       var total = 0;
+//       $.each(doughnutData,function() {
+//         total += parseInt(this.value,10);
+//     });
+//    var tpercentage = ((doughnutData[0].value/total)*100).toFixed(2)+"%";
+//    var textWidth = ctx.measureText(tpercentage).width;
+//
+//     var txtPosx = Math.round((canvasWidthvar - textWidth)/2);
+//      ctx.fillText(tpercentage, txtPosx, canvasHeight/2);
+    }
     });
-  }]);
+    ChartJsProvider.setOptions('Bar', {
+      segmentShowStroke : false,
+//      segmentStrokeColor : "#fff",
+//      segmentStrokeWidth : 2,
+      animationSteps : 100,
+//      animationEasing : "easeOutBounce",
+      animateRotate : true,
+      animateScale : true,
+      showTooltips: false,
+      barValueSpacing : 100,
+      barDatasetSpacing : 50
+  });
+}]);
