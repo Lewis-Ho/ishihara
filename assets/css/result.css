@@ -1,16 +1,22 @@
-/*
-.chart div {
-  font: 10px sans-serif;
-  background-color: steelblue;
-  text-align: right;
-  padding: 3px;
-  margin: 1px;
-  color: white;
+canvas {
+  width: 100% !important;
+  max-width: 400px;
+  height: auto !important;
 }
-*/
-h2, h4 {
+h2,h4 {
   text-align: center;
 }
-.chart p {
-  text-align: center;
+h4 {
+  border-bottom: 1px;
 }
+.donut-inner
+{
+margin-top: -100px;
+margin-bottom: 100px;
+}
+.donut-inner h5
+{
+margin-bottom: 5px;
+margin-top: 0;
+}
+.donut-inner span {font-size: 12px;}

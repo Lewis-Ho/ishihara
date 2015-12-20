@@ -84,7 +84,17 @@ function resetGame(){
   $scope.$parent.score = scoreboard.getScore();
 }
 
-app.controller('GameBoardCtrl', ['$scope', '$window', '$interval', '$mdDialog', '$http', '$cookies', 'scoreboard', function($scope, $window, $interval, $mdDialog, $http, $cookies, scoreboard) {
+// Hex to Rgb Color Code
+function analyzeColor(color){
+  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(color);
+    return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+    } : null;
+}
+
+app.controller('GameBoardCtrl', ['$scope', '$window', '$interval', '$mdDialog', '$http', '$cookies', '$state', 'scoreboard', function($scope, $window, $interval, $mdDialog, $http, $cookies, $state, scoreboard) {
   // Init GAME Setting
   var boxesSize = 2;
   var ranColor = randomPick(colorSet);
@@ -229,22 +239,56 @@ app.controller('GameBoardCtrl', ['$scope', '$window', '$interval', '$mdDialog', 
           round : scoreboard.getRound(),
           score : scoreboard.getScore(),
           age: 18,
-          is_color_blind: true
+          is_color_blind: false,
+          total_r: scoreboard.getTotalR(),
+          total_g: scoreboard.getTotalG(),
+          total_b: scoreboard.getTotalB(),
+          hit_r: scoreboard.getHitR(),
+          hit_g: scoreboard.getHitG(),
+          hit_b: scoreboard.getHitB()
+//          total : [
+//            {r: scoreboard.getTotalR()},
+//            {g: scoreboard.getTotalG()},
+//            {b: scoreboard.getTotalB()}
+//          ],
+//          hit : [
+//            {r: scoreboard.getHitR()},
+//            {g: scoreboard.getHitG()},
+//            {b: scoreboard.getHitB()}
+//          ]
+//          total_r: scoreboard.getTotalR(),
+//          total_g: scoreboard.getTotalG(),
+//          total_b: scoreboard.getTotalB(),
+//          hit_r: scoreboard.getHitR(),
+//          hit_g: scoreboard.getHitG(),
+//          hit_b: scoreboard.getHitB()
         };
         // Set Cookies for result page data, later need to save time too so if time is not right then redirect to homepage
         $cookies.put('_s', data.score);
-        var favoriteCookie = $cookies.get('_s');
-        console.log(favoriteCookie);
+        $cookies.put('_tr', data.total_r);
+        $cookies.put('_tg', data.total_g);
+        $cookies.put('_tb', data.total_b);
+        $cookies.put('_hr', data.hit_r);
+        $cookies.put('_hg', data.hit_g);
+        $cookies.put('_hb', data.hit_b);
+        
+        console.log(data.total_r);
+        console.log($cookies.get('_hr'));
+        
+//        var favoriteCookie = $cookies.get('_s');
+//        console.log(favoriteCookie);
         
         var request = $http.post('/Game/:data', data);
         request.success(function(data){
           console.log("controller start");
+//          console.log(scoreboard.getTotal());
           console.log(data);
+          $state.go("result", {'tr' : data.total_r });
           console.log("controller End");
         });
 
         // Show Dialog
-        endGameMessage($mdDialog);
+        //endGameMessage($mdDialog);
       }
     }, 450, 0, true);
   };
@@ -275,12 +319,22 @@ app.controller('GameBoardCtrl', ['$scope', '$window', '$interval', '$mdDialog', 
   
   ///// GAME FUNCTION /////
   // Check current button's flag: if true, resize array; if false, size remain but change color set
-  $scope.check = function(flag) {
+  $scope.check = function(flag,color) {
     scoreboard.updateRound();
     $scope.$parent.round = scoreboard.getRound();
     $scope.$parent.roundTime = 0;
     //$scope.round = scoreboard.getRound();
     if (flag==1) {
+      var rgbCode = analyzeColor(color);
+      console.log("right ");
+      scoreboard.updateHitR(rgbCode.r);
+      scoreboard.updateHitG(rgbCode.g);
+      scoreboard.updateHitB(rgbCode.b);
+      scoreboard.updateTotalR(rgbCode.r);
+      scoreboard.updateTotalG(rgbCode.g);
+      scoreboard.updateTotalB(rgbCode.b);
+      console.log(scoreboard.getHitR() + " " + scoreboard.getHitG() + " " + scoreboard.getHitB());
+      
       scoreboard.updateScore();
       $scope.$parent.score = scoreboard.getScore();
       if (vpw<vph){
@@ -296,8 +350,14 @@ app.controller('GameBoardCtrl', ['$scope', '$window', '$interval', '$mdDialog', 
           boxesSize++;
         }
       }
+    } else {
+      var rgbCode = analyzeColor(color);
+      console.log("Wrong ");
+      scoreboard.updateTotalR(rgbCode.r);
+      scoreboard.updateTotalG(rgbCode.g);
+      scoreboard.updateTotalB(rgbCode.b);
     }
-
+    
     console.log(vpw + ' ' + boxesSize);
     // Create new set of boxes, final boxesSize will be ^2 
     $scope.boxes = [];
@@ -336,6 +396,8 @@ app.factory('scoreboard', function(){
   var _score = 0;
   var _history = 'high score';
   var _round = 0;
+  var _total = [0,0,0];
+  var _hit = [0,0,0];
   
   service.getScore = function(){
     return _score;
@@ -363,6 +425,54 @@ app.factory('scoreboard', function(){
   }
   service.resetHistory = function(){
     _hostory = '';
+  }
+  service.getTotalR = function(){
+    return _total[0];
+  }
+  service.getTotalG = function(){
+    return _total[1];
+  }
+  service.getTotalB = function(){
+    return _total[2];
+  }
+  service.updateTotalR = function(num){
+    console.log(_total[0]);
+    console.log(num);
+    _total[0] = _total[0] + num;
+  }
+  service.updateTotalG = function(num){
+    console.log(_total[1]);
+    console.log(num);
+    _total[1] = _total[1] + num;
+  }
+  service.updateTotalB = function(num){
+    console.log(_total[2]);
+    console.log(num);
+    _total[2] = _total[2] + num;
+  }
+  service.resetTotal = function(){
+    _total = [0,0,0];
+  }
+  service.getHitR = function(){
+    return _hit[0];
+  }
+  service.getHitG = function(){
+    return _hit[1];
+  }
+  service.getHitB = function(){
+    return _hit[2];
+  }
+  service.updateHitR = function(num){
+    _hit[0] = _hit[0] + num;
+  }
+  service.updateHitG = function(num){
+    _hit[1] = _hit[1] + num;
+  }
+  service.updateHitB = function(num){
+    _hit[2] = _hit[2] + num;
+  }
+  service.resetHit = function(){
+    _hit = [0,0,0];
   }
   return service;
 })
