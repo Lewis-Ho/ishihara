@@ -41,12 +41,12 @@ router.route('/Result')
 router.route('/Game/Result') 
   .get(function(req, res) {
     res.json({ message: 'game result server' });
+    res.locals.game = req.game;
+    console.log(res.locals.game);
     console.log("game result server");
   });
 
 router.route('/:data')
-
-    // create a bear (accessed at POST http://localhost:8080/api/bears)
     .post(function(req, res) {
         
         var game = new Game();      // create a new instance of the Bear model
@@ -58,13 +58,21 @@ router.route('/:data')
         game.score = req.body.score;
         game.age = req.body.age;
         game.is_color_blind = req.body.is_color_blind;
+        game.total_r = req.body.total_r;
+        game.total_g = req.body.total_g;
+        game.total_b = req.body.total_b;
+        game.hit_r = req.body.hit_r;
+        game.hit_g = req.body.hit_g;
+        game.hit_b = req.body.hit_b;
 
         // save the bear and check for errors
         game.save(function(err) {
-            if (err)
-                res.send(err);
-
-            res.json({ message: 'Bear created!' });
+            if (err) {
+              res.send(err);
+            } else {
+              res.json(game);
+            }
+            //res.json({ message: 'Bear created!' });
         });
         
     });

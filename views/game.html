@@ -8,7 +8,7 @@
     <div ng-controller="GameBoardCtrl" class="game-container">
       <div layout="row" layout-align="space-around center" class="rows" ng-repeat="rows in boxes">
         <span class="row" ng-repeat="box in rows">
-          <md-button aria-label="Click Me!" ng-style="{'background': box.color ,'width':btnWidth, 'height':btnWidth }" ng-click="check(box.flag)"></md-button>
+          <md-button aria-label="Click Me!" ng-style="{'background': box.color ,'width':btnWidth, 'height':btnWidth }" ng-click="check(box.flag, box.color)"></md-button>
         </span>
       </div>
     </div>

@@ -4,15 +4,35 @@
     <link rel="stylesheet" href="assets/css/result.css"/>
   </head>
   <body>
-    <div class="someclass">
+    <div class="someclass" layout="column">
       <h2>Analyze Report</h2>
+      <h4>Reaction to RGB</h4>
+      <div id="pie-chart chart-canvas" layout="row">
+        <div ng-controller="pieOneCtrl">
+          <canvas id="doughnut" class="chart chart-doughnut" chart-data="data" chart-labels="labels" chart-colours="colours"></canvas>
+          <div class="donut-inner">
+            <h5>47 / 60 st</h5>
+            <span>(30 / 25 st)</span>
+          </div>
+        </div>
+        <div ng-controller="pieTwoCtrl">
+          <canvas id="doughnut" class="chart chart-doughnut" chart-data="data" chart-labels="labels" chart-colours="colours"></canvas>
+        </div>
+        <div ng-controller="pieThreeCtrl">
+          <canvas id="doughnut" class="chart chart-doughnut" chart-data="data" chart-labels="labels" chart-colours="colours"></canvas>
+        </div>
+      </div>
+      
       
       <p>Average</p>
-      <div id="average-bar-chart"></div>
+      <div ng-controller="resizeCtrl" id="average-bar-chart">
+        <canvas id="bar" class="chart chart-bar" chart-data="data" chart-labels="labels"> chart-series="series"</canvas>
+      </div>
       
       <p>Bar</p>
       <div id="bar-chart"></div>
     </div>
     
+    <script src="Chart.js"></script>
   </body>
 </html>
