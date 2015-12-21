@@ -49,3 +49,10 @@ md-toolbar h1 {
   font-size: 1.250em;
   font-weight: 400;
 }
+.md-caption {
+  padding: 10px;
+  padding: 10px;
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+}
