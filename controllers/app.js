@@ -95,6 +95,6 @@ angular
       animateScale : true,
       showTooltips: false,
       barValueSpacing : 100,
-      barDatasetSpacing : 50
+      barDatasetSpacing : 40
   });
 }]);

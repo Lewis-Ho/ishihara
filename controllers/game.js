@@ -265,6 +265,7 @@ app.controller('GameBoardCtrl', ['$scope', '$window', '$interval', '$mdDialog', 
         };
         // Set Cookies for result page data, later need to save time too so if time is not right then redirect to homepage
         $cookies.put('_s', data.score);
+        $cookies.put('_r', data.round);
         $cookies.put('_tr', data.total_r);
         $cookies.put('_tg', data.total_g);
         $cookies.put('_tb', data.total_b);

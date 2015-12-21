@@ -7,28 +7,41 @@
     <div class="result" layout="column">
       <h2>Analyze Report</h2>
       
-      <h3>Score</h3>
-      <p>Rating to Population Score Average</p>
-      <div ng-controller="resizeCtrl" id="average-bar-chart">
-        <canvas id="bar" class="chart chart-bar" chart-data="data" chart-labels="labels" > chart-series="series"</canvas>
-<!--        <div id="average-desc">Testing</div>-->
+      <div class="intro">
+        <h3>Thank you for playing.</h3>
+        <p>You score {{score}} right in {{round}} round.</p>
+        <p>If this is your first time to playing this game, we encourage you to take this as final result for the analysis. But it is welcome to take this test again if you want!</p>
       </div>
       
-      <h3>Performance to RGB</h3>
-      <p>Estimated rating on how you response to red, green and blue color.</p>
-      <div class="pie-chart" layout="row">
-        <div class="chart-canvas" ng-controller="pieOneCtrl">
-          <canvas id="doughnut" class="chart chart-doughnut" chart-data="data" chart-labels="labels" chart-colours="colours"></canvas>
-<!--          <span class="chart-title" count-to="{{countNumOne}}" value="0" duration="1"></span>          -->
+      <div class="average-bar-chart">
+        <h3>Score</h3>
+        <p>Rating to Population Score Average</p>
+        <div ng-controller="resizeCtrl" class="bar-canvas">
+          <canvas id="bar" class="chart chart-bar" chart-data="data" chart-labels="labels" > chart-series="series"</canvas>
         </div>
-        <div class="chart-canvas" ng-controller="pieTwoCtrl">
+      </div>
+    
+      <div class="pie-chart">
+        <h3>Performance to RGB</h3>
+        <p>Estimated rating on how you response to red, green and blue color.</p>
+        <p><i>**We analyze your performance based on the color set you just answered.</i></p>
+        <span class="chart-canvas" ng-controller="pieOneCtrl">
           <canvas id="doughnut" class="chart chart-doughnut" chart-data="data" chart-labels="labels" chart-colours="colours"></canvas>
-<!--          <span class="chart-title" count-to="{{countNumTwo}}" value="0" duration="1"></span> -->
-        </div>
-        <div class="chart-canvas" ng-controller="pieThreeCtrl">
+          <span class="chart-title" count-to="{{countNumOne}}" value="0" duration="1"></span>          
+        </span>
+        <span class="chart-canvas" ng-controller="pieTwoCtrl">
           <canvas id="doughnut" class="chart chart-doughnut" chart-data="data" chart-labels="labels" chart-colours="colours"></canvas>
-<!--          <span class="chart-title" count-to="{{countNumThree}}" value="0" duration="1"></span> -->
-        </div>
+          <span class="chart-title" count-to="{{countNumTwo}}" value="0" duration="1"></span> 
+        </span>
+        <span class="chart-canvas" ng-controller="pieThreeCtrl">
+          <canvas id="doughnut" class="chart chart-doughnut" chart-data="data" chart-labels="labels" chart-colours="colours"></canvas>
+          <span class="chart-title" count-to="{{countNumThree}}" value="0" duration="1"></span>
+        </span>
+      </div>
+      
+      <div class="end-desc">
+        <p>Feeling not good enough? Let play again!</p>
+        <md-button id="start-btn" href="#Game"> Play Again! </md-button>
       </div>
       
     </div>

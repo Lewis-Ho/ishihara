@@ -36,6 +36,7 @@ app.controller('ResultCtrl', function ($scope, $route, $routeParams, $location, 
     
     
     var score = $cookies.get('_s');
+    var round = $cookies.get('_r');
     console.log("cookies: ");
     console.log(score);
     var vpw = $window.innerWidth;
@@ -112,6 +113,9 @@ app.controller('ResultCtrl', function ($scope, $route, $routeParams, $location, 
     console.log($cookies.get('_s'));
     console.log($cookies.get('_t'));
     console.log($cookies.get('_h'));
+    $scope.score = score;
+    $scope.round = round;
+    
 //    function type(d) {
 //      d.value = +d.value; // coerce to number
 //      return d;

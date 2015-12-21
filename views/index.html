@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="node_modules/angular-chart.js/dist/angular-chart.css">
   </head>
 
-  <body ng-app="starterApp" layout="row">
+  <body ng-app="starterApp" layout="row"  style="height: auto;">
     <div flex layout="column" tabIndex="-1" role="main" class="md-whiteframe-z2">
 
 <!--
@@ -32,9 +32,11 @@
       <div class="menu-btn">
         <md-fab-speed-dial md-open="false" md-direction="up" class="md-scale md-fab-bottom-right">
           <md-fab-trigger>
+<!--
             <md-button aria-label="menu" class="md-fab md-primary">
               <md-icon md-svg-src="assets/svg/menu.svg"></md-icon>
             </md-button>
+-->
           </md-fab-trigger>
           
           <md-fab-actions>
@@ -66,6 +68,6 @@
     <script type="text/javascript" src="controllers/result.js"></script>
     <script type="text/javascript" src="controllers/scoreboard.js"></script>
     <script type="text/javascript" src="controllers/angular-count-to.min.js"></script>
-    <script type="text/javascript" src="controllers/resize.js"></script>
+<!--    <script type="text/javascript" src="controllers/resize.js"></script>-->
   </body>
 </html>

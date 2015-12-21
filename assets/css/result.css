@@ -1,35 +1,68 @@
 @media only screen and (max-width: 610px) {
-  #doughnut {
-    width: 100% !important;
-    max-width: 90%;
-    height: auto !important;
+  .bar-canvas {
+    width: 80%;
   }
 }
-@media (min-width: 610px) {
-  #doughnut {
-    width: 100% !important;
-    max-width: 350px;
-    height: auto !important;
+@media (min-width: 610px) and (max-width: 960px){
+  .bar-canvas {
+    width: 80%;
+  }
+}
+@media (min-width: 960px){
+  .bar-canvas {
+    width: 40%;
   }
 }
 
-
+/*
 #bar {
   width: 100% !important;
   max-width: 90%;
   height: auto !important;
 }
+*/
 /*
+.result {
+  padding-left: 20px;
+}
+*/
+.intro {
+  padding-left: 20px;
+}
+.average-bar-chart {
+  display: inline;
+  padding-left: 20px;
+}
+#bar {
+}
+.bar-canvas {
+  display:inline-block;
+  width: 80%;
+/*  height: 30%;*/
+}
+.bar-canvas-desc {
+  width: 15%;
+}
 #doughnut {
+/*
   width: 100% !important;
   max-width: 350px;
   height: auto !important;
-}
 */
-
+  padding: 20px;
+}
+.pie-chart {
+  display: inline;
+  padding-left: 20px;
+}
+.chart-canvas {
+  display:inline-block;
+  width: 30%;
+  position: relative;
+}
 
 h2,h3,h4,p {
-  text-align: center;
+/*  text-align: center;*/
 /*  margin-bottom: 0 auto;*/
 }
 h2 {
@@ -42,16 +75,40 @@ h2 {
 h4 {
   border-bottom: 1px;
 }
+.result h3 {
+  margin-bottom: 0;
+/*
+  border-style: solid;
+  border-right-width: 0px;
+  border-left-width: 0px;
+  border-top-width: 0px;
+  padding-bottom: 10px;
+*/
+}
 .chart-canvas span {
   font-size: 2.5em;
 }
+.chart-title {
+  left: 7%;
+  top: 40%;
+  position: absolute;
+  margin: 0 auto;
+  text-align: center;
+  width: 100%;
+}
+.end-desc {
+  text-align: center;
+}
+/*
+
 .chart-title {
   position: absolute;
   left: 0;
   right: 0;
   margin: 0 auto;
   top: 34%;
-/*  transform: translateY(-50%);*/
+  transform: translateY(-50%);
   width: 100%;
   text-align: center;
 }
+*/
