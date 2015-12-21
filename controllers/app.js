@@ -44,6 +44,12 @@ angular
         'hb': 'some default'
       }
     })
+    .state('game', {
+      url: '/Game',
+      templateUrl: 'views/game.html',
+      controller: 'GameCtrl',
+      controllerAs: 'game'
+    })
 })
 .config(['ChartJsProvider', function (ChartJsProvider) {
     // Configure all charts
@@ -86,15 +92,15 @@ angular
     }
     });
     ChartJsProvider.setOptions('Bar', {
-      segmentShowStroke : false,
-//      segmentStrokeColor : "#fff",
-//      segmentStrokeWidth : 2,
-      animationSteps : 100,
-//      animationEasing : "easeOutBounce",
-      animateRotate : true,
-      animateScale : true,
-      showTooltips: false,
-      barValueSpacing : 100,
-      barDatasetSpacing : 40
+//      segmentShowStroke : false,
+////      segmentStrokeColor : "#fff",
+////      segmentStrokeWidth : 2,
+//      animationSteps : 100,
+////      animationEasing : "easeOutBounce",
+//      animateRotate : true,
+//      animateScale : true,
+//      showTooltips: false,
+//      barValueSpacing : 100,
+//      barDatasetSpacing : 40
   });
 }]);

@@ -17,7 +17,7 @@
         <h3>Score</h3>
         <p>Rating to Population Score Average</p>
         <div ng-controller="resizeCtrl" class="bar-canvas">
-          <canvas id="bar" class="chart chart-bar" chart-data="data" chart-labels="labels" > chart-series="series"</canvas>
+          <canvas id="bar" class="chart chart-bar" chart-data="data" chart-labels="labels" chart-options="options"> chart-series="series"</canvas>
         </div>
       </div>
     
@@ -41,7 +41,7 @@
       
       <div class="end-desc">
         <p>Feeling not good enough? Let play again!</p>
-        <md-button id="start-btn" href="#Game"> Play Again! </md-button>
+        <md-button id="start-btn" ng-click="changeState()"> Play Again! </md-button>
       </div>
       
     </div>

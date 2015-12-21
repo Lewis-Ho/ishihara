@@ -9,7 +9,7 @@
 
 var app = angular.module('starterApp');
 
-app.controller('ResultCtrl', function ($scope, $route, $routeParams, $location, $http, $cookies, $window, $stateParams) {
+app.controller('ResultCtrl', function ($scope, $route, $routeParams, $location, $http, $cookies, $window, $stateParams, $state) {
   $scope.$route = $route;
   $scope.$location = $location;
   $scope.$routeParams = $routeParams;
@@ -105,16 +105,16 @@ app.controller('ResultCtrl', function ($scope, $route, $routeParams, $location, 
 //
 //    //Initial call 
 //    respondCanvas();
-    
-    
-    
-    
 //    var favoriteCookie = $cookies.get('_s');
     console.log($cookies.get('_s'));
     console.log($cookies.get('_t'));
     console.log($cookies.get('_h'));
     $scope.score = score;
     $scope.round = round;
+    
+    $scope.changeState = function () {
+      $state.go('game');
+    };
     
 //    function type(d) {
 //      d.value = +d.value; // coerce to number
@@ -200,13 +200,36 @@ app.controller("resizeCtrl", function ($scope, $window, $http, $cookies) {
       var aveChartData = [ score, average ];
       
       
+//      console.log(vpw);
       
-      $scope.labels = ['Your Score VS Population Score'];
+      $scope.options = {
+        segmentShowStroke : false,
+//      segmentStrokeColor : "#fff",
+//      segmentStrokeWidth : 2,
+        animationSteps : 150,
+//      animationEasing : "easeOutBounce",
+//        animateRotate : true,
+//        animateScale : true,
+//        showTooltips: false,
+        scaleShowGridLines: true,
+        barShowStroke : false,
+        barValueSpacing: 20,
+        barDatasetSpacing : 40
+      };
+      
+      var vpw = $window.innerWidth;
+      if(vpw<475){
+        $scope.labels = [''];
+      } else {
+        $scope.labels = ['Your Score vs Population Score'];
+      }
+//      $scope.labels = ['Your Score vs Population Score'];
       $scope.series = ['Your Score', 'Population Average'];
 
       $scope.data = [
         [aveChartData[0]],
         [aveChartData[1]]
       ];
+        
     });
   });
