@@ -44,11 +44,17 @@ angular
         'hb': 'some default'
       }
     })
+//    .state('game', {
+//      url: '/Game',
+//      templateUrl: 'views/game.html',
+//      controller: 'GameCtrl',
+//      controllerAs: 'game'
+//    })
     .state('game', {
       url: '/Game',
-      templateUrl: 'views/game.html',
-      controller: 'GameCtrl',
-      controllerAs: 'game'
+      templateUrl: 'views/start.html',
+      controller: 'MainCtrl',
+      controllerAs: 'main'
     })
 })
 .config(['ChartJsProvider', function (ChartJsProvider) {

@@ -48,7 +48,7 @@ body, html {
 }
 .important {
   padding: 2% 10%;
-  margin: 3% 10% 0% 10%;
+  margin: auto;
 /*  display: flex;*/
   justify-content: center;
 /*  align-items: center;*/
@@ -66,4 +66,22 @@ body, html {
 #low-data {
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
+}
+
+
+@media only screen and (max-width: 475px) {
+/*
+  .important {
+    padding: 2% 10%;
+    margin: auto;
+    justify-content: center;
+    background-color: gainsboro;
+  }
+*/
+}
+@media (min-width: 475px) and (max-width: 610px) {
+}
+@media (min-width: 610px) and (max-width: 960px){
+}
+@media (min-width: 960px){
 }

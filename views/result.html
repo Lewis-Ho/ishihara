@@ -27,25 +27,30 @@
         <p><i>**We analyze your performance based on the color set you just answered.</i></p>
         <span class="chart-canvas" ng-controller="pieOneCtrl">
           <canvas id="doughnut" class="chart chart-doughnut" chart-data="data" chart-labels="labels" chart-colours="colours"></canvas>
-          <span class="chart-title" count-to="{{countNumOne}}" value="0" duration="1"></span>          
+          <div class="chart-info">
+            <span count-to="{{countNumOne}}" value="0" duration="1"></span><span>%</span>
+          </div>          
         </span>
         <span class="chart-canvas" ng-controller="pieTwoCtrl">
           <canvas id="doughnut" class="chart chart-doughnut" chart-data="data" chart-labels="labels" chart-colours="colours"></canvas>
-          <span class="chart-title" count-to="{{countNumTwo}}" value="0" duration="1"></span> 
+          <div class="chart-info">
+            <span count-to="{{countNumTwo}}" value="0" duration="1"></span><span>%</span>
+          </div> 
         </span>
         <span class="chart-canvas" ng-controller="pieThreeCtrl">
           <canvas id="doughnut" class="chart chart-doughnut" chart-data="data" chart-labels="labels" chart-colours="colours"></canvas>
-          <span class="chart-title" count-to="{{countNumThree}}" value="0" duration="1"></span>
+          <div class="chart-info">
+            <span count-to="{{countNumThree}}" value="0" duration="1"></span><span>%</span>
+          </div>
         </span>
       </div>
       
       <div class="end-desc">
         <p>Feeling not good enough? Let play again!</p>
-        <md-button id="start-btn" ng-click="changeState()"> Play Again! </md-button>
+        <md-button id="start-btn" class="md-raised" ng-click="changeState()"> Play Again! </md-button>
       </div>
       
+      <p class="md-caption">Created by <a href="mailto:yiucheung.ho@gmail.com">Lewis Ho</a></p>
     </div>
-    
-    <script src="Chart.js"></script>
   </body>
 </html>

@@ -200,28 +200,40 @@ app.controller("resizeCtrl", function ($scope, $window, $http, $cookies) {
       var aveChartData = [ score, average ];
       
       
-//      console.log(vpw);
-      
-      $scope.options = {
-        segmentShowStroke : false,
-//      segmentStrokeColor : "#fff",
-//      segmentStrokeWidth : 2,
-        animationSteps : 150,
-//      animationEasing : "easeOutBounce",
-//        animateRotate : true,
-//        animateScale : true,
-//        showTooltips: false,
-        scaleShowGridLines: true,
-        barShowStroke : false,
-        barValueSpacing: 20,
-        barDatasetSpacing : 40
-      };
-      
       var vpw = $window.innerWidth;
       if(vpw<475){
         $scope.labels = [''];
+        $scope.options = {
+          segmentShowStroke : false,
+  //      segmentStrokeColor : "#fff",
+  //      segmentStrokeWidth : 2,
+          animationSteps : 150,
+  //      animationEasing : "easeOutBounce",
+  //        animateRotate : true,
+  //        animateScale : true,
+  //        showTooltips: false,
+          scaleShowGridLines: false,
+          barShowStroke : false,
+          barValueSpacing : 40,
+//          barValueSpacing: 20,
+          barDatasetSpacing : 5
+        };
       } else {
         $scope.labels = ['Your Score vs Population Score'];
+        $scope.options = {
+          segmentShowStroke : false,
+  //      segmentStrokeColor : "#fff",
+  //      segmentStrokeWidth : 2,
+          animationSteps : 150,
+  //      animationEasing : "easeOutBounce",
+  //        animateRotate : true,
+  //        animateScale : true,
+  //        showTooltips: false,
+          scaleShowGridLines: true,
+          barShowStroke : false,
+          barValueSpacing: 20,
+          barDatasetSpacing : 40
+        };
       }
 //      $scope.labels = ['Your Score vs Population Score'];
       $scope.series = ['Your Score', 'Population Average'];
