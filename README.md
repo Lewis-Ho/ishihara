@@ -1,6 +1,8 @@
 # Ishihara
 Do you really understand what is color blindness? Wondering how is your eyes performance about differentiate colors? Ishihara can probably give you some clue.
 
+Live Demo: http://ishihara.herokuapp.com/
+
 ## requirements
 node.js
 angular-material
